@@ -11,9 +11,7 @@ type ExactPinMapProps = {
 export function ExactPinMap({ pin }: ExactPinMapProps) {
   const mapElementRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<google.maps.Map | null>(null);
-  const markerRef = useRef<google.maps.marker.AdvancedMarkerElement | google.maps.Marker | null>(
-    null,
-  );
+  const markerRef = useRef<google.maps.Marker | null>(null);
   const [mapType, setMapType] = useState<"roadmap" | "satellite">("roadmap");
   const [loadError, setLoadError] = useState<string | null>(null);
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
@@ -47,30 +45,14 @@ export function ExactPinMap({ pin }: ExactPinMapProps) {
         map.setMapTypeId(mapType);
 
         if (!markerRef.current) {
-          try {
-            const { AdvancedMarkerElement } = (await importLibrary(
-              "marker",
-            )) as google.maps.MarkerLibrary;
-            markerRef.current = new AdvancedMarkerElement({
-              map,
-              position,
-              title: "Exact LocationIQ pin",
-            });
-          } catch {
-            markerRef.current = new google.maps.Marker({
-              map,
-              position,
-              title: "Exact LocationIQ pin",
-            });
-          }
+          markerRef.current = new google.maps.Marker({
+            map,
+            position,
+            title: "Exact LocationIQ pin",
+          });
         } else {
-          if ("setPosition" in markerRef.current) {
-            markerRef.current.setMap(map);
-            markerRef.current.setPosition(position);
-          } else {
-            markerRef.current.map = map;
-            markerRef.current.position = position;
-          }
+          markerRef.current.setMap(map);
+          markerRef.current.setPosition(position);
         }
       } catch {
         setLoadError("Google Maps could not load. The exact coordinate is still preserved.");
