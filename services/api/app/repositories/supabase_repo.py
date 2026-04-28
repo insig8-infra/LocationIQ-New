@@ -51,25 +51,49 @@ class SupabaseReportRepository(InMemoryReportRepository):
         )
 
         cells = cell_profile.get("cells", {})
-        self.client.table("locations").insert(
-            {
-                "report_request_id": request_row["id"],
-                "selected_latitude": pin.latitude,
-                "selected_longitude": pin.longitude,
-                "geom": f"POINT({pin.longitude} {pin.latitude})",
-                "address_text": pin.address_text,
-                "locality": pin.locality,
-                "city": pin.city,
-                "state": pin.state,
-                "geocode_quality_note": pin.geocode_quality_note,
-                "pin_identity_state": "coordinate_confirmed",
-                "s2_l12_cell_id": cells.get("L12"),
-                "s2_l13_cell_id": cells.get("L13"),
-                "s2_l14_cell_id": cells.get("L14"),
-                "s2_l15_cell_id": cells.get("L15"),
-                "s2_l16_cell_id": cells.get("L16"),
-            }
-        ).execute()
+        location_row = (
+            self.client.table("locations").insert(
+                {
+                    "report_request_id": request_row["id"],
+                    "selected_latitude": pin.latitude,
+                    "selected_longitude": pin.longitude,
+                    "geom": f"POINT({pin.longitude} {pin.latitude})",
+                    "address_text": pin.address_text,
+                    "locality": pin.locality,
+                    "city": pin.city,
+                    "district": pin.district,
+                    "state": pin.state,
+                    "pin_code": pin.pin_code,
+                    "plus_code": pin.plus_code,
+                    "geocode_quality_note": pin.geocode_quality_note,
+                    "pin_identity_state": "coordinate_confirmed",
+                    "s2_l12_cell_id": cells.get("L12"),
+                    "s2_l13_cell_id": cells.get("L13"),
+                    "s2_l14_cell_id": cells.get("L14"),
+                    "s2_l15_cell_id": cells.get("L15"),
+                    "s2_l16_cell_id": cells.get("L16"),
+                }
+            )
+            .execute()
+            .data[0]
+        )
+
+        reverse_rows = []
+        for result in cell_profile.get("reverse_geocode_results", []):
+            reverse_rows.append(
+                {
+                    "location_id": location_row["id"],
+                    "provider": result.get("provider", "unknown"),
+                    "provider_place_id": result.get("provider_place_id"),
+                    "response_json": result.get("response_json", {}),
+                    "resolved_latitude": result.get("resolved_latitude"),
+                    "resolved_longitude": result.get("resolved_longitude"),
+                    "distance_from_selected_m": result.get("distance_from_selected_m"),
+                    "cache_policy": result.get("cache_policy"),
+                }
+            )
+        if reverse_rows:
+            self.client.table("reverse_geocode_results").insert(reverse_rows).execute()
 
         record = ReportRecord(
             id=request_row["id"],

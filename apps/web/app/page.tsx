@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useMemo, useState } from "react";
+import { ExactPinMap } from "@/components/ExactPinMap";
 import {
   completeRazorpayPayment,
   completeMockPayment,
@@ -338,25 +339,6 @@ export default function Home() {
         {step === "report" && report ? <ReportView report={report} /> : null}
       </section>
     </main>
-  );
-}
-
-function ExactPinMap({ pin }: { pin?: LocationPreviewResponse["pin"] }) {
-  return (
-    <div className="map-canvas">
-      <div className="map-grid" />
-      {pin ? (
-        <>
-          <div className="pin-marker" />
-          <div className="coordinate-strip">
-            <span>Exact pin</span>
-            <strong>{formatPin(pin)}</strong>
-          </div>
-        </>
-      ) : (
-        <div className="map-empty">Waiting for a coordinate</div>
-      )}
-    </div>
   );
 }
 

@@ -21,7 +21,10 @@ export type Pin = {
   address_text?: string | null;
   locality?: string | null;
   city?: string | null;
+  district?: string | null;
   state?: string | null;
+  pin_code?: string | null;
+  plus_code?: string | null;
   geocode_quality_note?: string | null;
 };
 

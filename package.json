@@ -12,7 +12,8 @@
     "lint:web": "npm --workspace apps/web run lint",
     "typecheck:web": "npm --workspace apps/web run typecheck",
     "dev:api": "cd services/api && .venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8000",
-    "test:api": "cd services/api && .venv/bin/pytest"
+    "test:api": "cd services/api && .venv/bin/pytest",
+    "check:supabase": "cd services/api && .venv/bin/python scripts/check_supabase_schema.py"
   },
   "engines": {
     "node": ">=22"

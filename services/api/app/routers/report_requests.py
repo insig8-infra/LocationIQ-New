@@ -48,6 +48,25 @@ def get_record_by_token_or_404(report_token: str) -> ReportRecord:
     return record
 
 
+def nearby_context_from_profile(cell_profile: dict) -> list:
+    context = []
+    for result in cell_profile.get("reverse_geocode_results", []):
+        if result.get("collection_type") == "provider_error":
+            continue
+        context.append(
+            {
+                "provider": result.get("provider"),
+                "address_text": result.get("address_text"),
+                "locality": result.get("locality"),
+                "city": result.get("city"),
+                "state": result.get("state"),
+                "distance_from_selected_m": result.get("distance_from_selected_m"),
+                "note": result.get("user_facing_source_note"),
+            }
+        )
+    return context
+
+
 @router.post("/location-preview", response_model=LocationPreviewResponse)
 async def create_location_preview(payload: LocationPreviewRequest) -> LocationPreviewResponse:
     purpose = infer_purpose(payload.use_case_input)
@@ -73,7 +92,7 @@ async def create_location_preview(payload: LocationPreviewRequest) -> LocationPr
         map=MapPreview(
             provider="google_maps",
             marker=MapMarker(latitude=pin.latitude, longitude=pin.longitude),
-            nearby_context=[],
+            nearby_context=nearby_context_from_profile(cell_profile),
         ),
     )
 

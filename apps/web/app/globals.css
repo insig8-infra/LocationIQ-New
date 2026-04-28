@@ -215,6 +215,38 @@ input:focus {
   background-size: 42px 42px;
 }
 
+.google-map {
+  position: absolute;
+  inset: 0;
+}
+
+.map-toggle {
+  position: absolute;
+  right: 18px;
+  top: 18px;
+  display: flex;
+  overflow: hidden;
+  border: 1px solid rgba(23, 32, 27, 0.14);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 8px 22px rgba(23, 32, 27, 0.12);
+}
+
+.map-toggle button {
+  min-height: 38px;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  padding: 0 12px;
+  cursor: pointer;
+  font-weight: 760;
+}
+
+.map-toggle button.selected {
+  background: var(--accent);
+  color: #fff;
+}
+
 .pin-marker {
   position: absolute;
   left: 50%;
@@ -242,6 +274,20 @@ input:focus {
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.92);
   padding: 14px 16px;
+}
+
+.map-warning {
+  position: absolute;
+  left: 18px;
+  top: 18px;
+  max-width: min(360px, calc(100% - 36px));
+  border: 1px solid rgba(178, 107, 24, 0.3);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.94);
+  color: #66400d;
+  padding: 12px 14px;
+  font-size: 0.9rem;
+  font-weight: 700;
 }
 
 .coordinate-strip span,
@@ -355,4 +401,3 @@ input:focus {
     flex-direction: column;
   }
 }
-

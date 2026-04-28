@@ -18,6 +18,9 @@ class Settings(BaseModel):
     razorpay_key_id: str = Field(default="")
     razorpay_key_secret: str = Field(default="")
     razorpay_webhook_secret: str = Field(default="")
+    google_maps_api_key: str = Field(default="")
+    mappls_rest_api_key: str = Field(default="")
+    here_api_key: str = Field(default="")
 
     @classmethod
     def from_env(cls) -> "Settings":
@@ -46,6 +49,10 @@ class Settings(BaseModel):
             razorpay_key_id=razorpay_key_id,
             razorpay_key_secret=razorpay_key_secret,
             razorpay_webhook_secret=os.getenv("RAZORPAY_WEBHOOK_SECRET", ""),
+            google_maps_api_key=os.getenv("GOOGLE_MAPS_API_KEY", ""),
+            mappls_rest_api_key=os.getenv("MAPPLS_REST_API_KEY")
+            or os.getenv("MAPPLS_API_KEY", ""),
+            here_api_key=os.getenv("HERE_API_KEY", ""),
         )
 
 

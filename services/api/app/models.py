@@ -59,7 +59,10 @@ class Pin(BaseModel):
     address_text: Optional[str] = None
     locality: Optional[str] = None
     city: Optional[str] = None
+    district: Optional[str] = None
     state: Optional[str] = None
+    pin_code: Optional[str] = None
+    plus_code: Optional[str] = None
     geocode_quality_note: Optional[str] = None
 
 
