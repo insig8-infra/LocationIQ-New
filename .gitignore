@@ -11,6 +11,7 @@ out/
 dist/
 coverage/
 *.tsbuildinfo
+apps/web/next-env.d.ts
 
 .venv/
 __pycache__/
