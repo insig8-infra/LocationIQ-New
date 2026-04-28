@@ -43,6 +43,31 @@ create table if not exists locations (
   created_at timestamptz not null default now()
 );
 
+-- Some Supabase projects already have a generic public.locations table.
+-- In that case, "create table if not exists" skips the LocationIQ shape, so
+-- ensure the columns required by the API exist before indexes and inserts run.
+alter table if exists locations
+  add column if not exists report_request_id uuid references report_requests(id) on delete cascade,
+  add column if not exists selected_latitude numeric,
+  add column if not exists selected_longitude numeric,
+  add column if not exists geom geography(Point, 4326),
+  add column if not exists address_text text,
+  add column if not exists locality text,
+  add column if not exists city text,
+  add column if not exists district text,
+  add column if not exists state text,
+  add column if not exists pin_code text,
+  add column if not exists plus_code text,
+  add column if not exists digipin text,
+  add column if not exists geocode_quality_note text,
+  add column if not exists pin_identity_state text default 'coordinate_confirmed',
+  add column if not exists s2_l12_cell_id text,
+  add column if not exists s2_l13_cell_id text,
+  add column if not exists s2_l14_cell_id text,
+  add column if not exists s2_l15_cell_id text,
+  add column if not exists s2_l16_cell_id text,
+  add column if not exists created_at timestamptz default now();
+
 create table if not exists reverse_geocode_results (
   id uuid primary key default gen_random_uuid(),
   location_id uuid not null references locations(id) on delete cascade,

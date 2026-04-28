@@ -29,6 +29,61 @@ REQUIRED_TABLES: List[str] = [
     "audit_events",
 ]
 
+REQUIRED_COLUMNS = {
+    "report_requests": [
+        "id",
+        "public_token",
+        "email",
+        "location_input",
+        "use_case_input",
+        "status",
+        "payment_status",
+        "current_stage",
+        "progress_percent",
+    ],
+    "locations": [
+        "id",
+        "report_request_id",
+        "selected_latitude",
+        "selected_longitude",
+        "geom",
+        "address_text",
+        "locality",
+        "city",
+        "state",
+        "pin_code",
+        "s2_l12_cell_id",
+        "s2_l13_cell_id",
+        "s2_l14_cell_id",
+        "s2_l15_cell_id",
+        "s2_l16_cell_id",
+    ],
+    "reverse_geocode_results": [
+        "id",
+        "location_id",
+        "provider",
+        "provider_place_id",
+        "response_json",
+    ],
+    "previews": ["id", "report_request_id", "preview_json", "cost_class"],
+    "payments": [
+        "id",
+        "report_request_id",
+        "provider",
+        "checkout_session_id",
+        "payment_id",
+        "status",
+    ],
+    "reports": [
+        "id",
+        "report_request_id",
+        "public_token",
+        "schema_version",
+        "report_json",
+        "status",
+    ],
+}
+
 
 def main() -> int:
     settings = get_settings()
@@ -42,8 +97,9 @@ def main() -> int:
     )
     missing = []
     for table in REQUIRED_TABLES:
+        select_clause = ",".join(REQUIRED_COLUMNS.get(table, ["*"]))
         try:
-            repo.client.table(table).select("*").limit(1).execute()
+            repo.client.table(table).select(select_clause).limit(1).execute()
         except APIError as exc:
             missing.append((table, exc.message))
 
