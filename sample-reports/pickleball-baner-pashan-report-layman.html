@@ -1,0 +1,705 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>LocationIQ - Plain-English Pickleball Location Report</title>
+    <style>
+      :root {
+        --bg: #f5f7f4;
+        --surface: #ffffff;
+        --surface-alt: #eef5ef;
+        --text: #142219;
+        --muted: #5d6d62;
+        --line: #d9e1da;
+        --green: #1f8a63;
+        --green-soft: #dff3e8;
+        --amber: #b97a15;
+        --amber-soft: #fff0d9;
+        --red: #b54a36;
+        --red-soft: #fde4de;
+        --shadow: 0 18px 44px rgba(20, 34, 25, 0.08);
+        --radius: 6px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.55;
+      }
+
+      a {
+        color: var(--green);
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      .hero {
+        min-height: 48vh;
+        padding: 34px 24px 42px;
+        color: #f6fff9;
+        background-image:
+          linear-gradient(180deg, rgba(12, 28, 21, 0.26), rgba(12, 28, 21, 0.76)),
+          url("https://images.pexels.com/photos/14982688/pexels-photo-14982688.jpeg?cs=srgb&dl=pexels-connorscottmcmanus-14982688.jpg&fm=jpg");
+        background-position: center;
+        background-size: cover;
+      }
+
+      .wrap {
+        width: min(1120px, 100%);
+        margin: 0 auto;
+      }
+
+      .eyebrow {
+        margin: 0 0 12px;
+        font-size: 0.88rem;
+        text-transform: uppercase;
+        color: rgba(246, 255, 249, 0.8);
+      }
+
+      h1,
+      h2,
+      h3 {
+        margin: 0;
+        line-height: 1.1;
+      }
+
+      h1 {
+        max-width: 920px;
+        font-size: clamp(2rem, 4vw, 4rem);
+        margin-bottom: 14px;
+      }
+
+      h2 {
+        font-size: clamp(1.35rem, 2.2vw, 2rem);
+        margin-bottom: 10px;
+      }
+
+      .hero-copy {
+        max-width: 780px;
+        margin: 0 0 20px;
+        font-size: 1.04rem;
+        color: rgba(246, 255, 249, 0.9);
+      }
+
+      .hero-tags,
+      .grid-2,
+      .grid-3,
+      .grid-4 {
+        display: grid;
+        gap: 14px;
+      }
+
+      .hero-tags {
+        grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      }
+
+      .tag,
+      .card,
+      .summary-box,
+      .pin-box,
+      .table-box {
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+      }
+
+      .tag {
+        padding: 12px 14px;
+        background: rgba(10, 22, 17, 0.34);
+        border-color: rgba(255, 255, 255, 0.2);
+      }
+
+      .tag strong {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 0.82rem;
+        color: rgba(246, 255, 249, 0.74);
+      }
+
+      .section {
+        padding: 28px 24px;
+      }
+
+      .section.alt {
+        background: var(--surface-alt);
+      }
+
+      .section-intro {
+        max-width: 820px;
+        margin: 0 0 20px;
+        color: var(--muted);
+      }
+
+      .grid-2 {
+        grid-template-columns: 1.2fr 0.8fr;
+        align-items: start;
+      }
+
+      .grid-3 {
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      }
+
+      .grid-4 {
+        grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      }
+
+      .summary-box,
+      .card,
+      .pin-box,
+      .table-box {
+        background: var(--surface);
+      }
+
+      .summary-box,
+      .card,
+      .pin-box {
+        padding: 18px;
+      }
+
+      .summary-box p,
+      .card p,
+      .pin-box p,
+      .table-box p {
+        margin: 0;
+      }
+
+      .summary-box p + p,
+      .card p + p {
+        margin-top: 12px;
+      }
+
+      .card strong,
+      .summary-box strong,
+      .pin-box strong {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 0.86rem;
+        color: var(--muted);
+      }
+
+      .badge {
+        display: inline-flex;
+        padding: 5px 9px;
+        border-radius: 999px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        margin-bottom: 12px;
+      }
+
+      .good {
+        background: var(--green-soft);
+        color: var(--green);
+      }
+
+      .mixed {
+        background: var(--amber-soft);
+        color: var(--amber);
+      }
+
+      .risk {
+        background: var(--red-soft);
+        color: var(--red);
+      }
+
+      .big-line {
+        font-size: 1.12rem;
+        font-weight: 600;
+      }
+
+      .pin-box {
+        background:
+          linear-gradient(135deg, rgba(31, 138, 99, 0.08), rgba(181, 74, 54, 0.08)),
+          linear-gradient(180deg, #ffffff, #f6fbf7);
+      }
+
+      .pin-coords {
+        font-size: clamp(1.35rem, 2.8vw, 2rem);
+        font-weight: 700;
+        margin-bottom: 12px;
+      }
+
+      .pin-row {
+        padding: 12px 0;
+        border-top: 1px solid var(--line);
+      }
+
+      .pin-row:first-of-type {
+        border-top: 0;
+        padding-top: 0;
+      }
+
+      .table-box {
+        overflow-x: auto;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        padding: 12px 10px;
+        text-align: left;
+        vertical-align: top;
+        border-bottom: 1px solid var(--line);
+        font-size: 0.95rem;
+      }
+
+      th {
+        font-size: 0.82rem;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      tr:last-child td {
+        border-bottom: 0;
+      }
+
+      ul {
+        margin: 0;
+        padding-left: 18px;
+      }
+
+      li + li {
+        margin-top: 8px;
+      }
+
+      .small {
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+
+      footer {
+        padding: 18px 24px 34px;
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+
+      @media (max-width: 900px) {
+        .grid-2 {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 680px) {
+        .hero {
+          padding: 26px 18px 34px;
+        }
+
+        .section,
+        footer {
+          padding-left: 18px;
+          padding-right: 18px;
+        }
+
+        h1 {
+          font-size: clamp(1.9rem, 9vw, 2.8rem);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="hero">
+      <div class="wrap">
+        <p class="eyebrow">Plain-English location report for a pickleball facility</p>
+        <h1>This pin looks better as a destination pickleball venue than as a casual neighborhood court</h1>
+        <p class="hero-copy">
+          In simple terms: the Baner-Pashan edge gives you a useful mix of offices, nearby homes, and an already-active sports culture.
+          The upside is real. The catch is that this is not an easy, charming walk-in spot. People will come here on purpose, so the site has to feel smoother, cleaner, and better run than nearby options.
+        </p>
+        <div class="hero-tags">
+          <div class="tag">
+            <strong>Location</strong>
+            <span>18.549390, 73.773619</span>
+          </div>
+          <div class="tag">
+            <strong>Nearest read</strong>
+            <span>Baner-Pashan edge, Pune</span>
+          </div>
+          <div class="tag">
+            <strong>Best fit</strong>
+            <span>After-work and weekend destination play</span>
+          </div>
+          <div class="tag">
+            <strong>Updated</strong>
+            <span>22 Apr 2026</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="section">
+      <div class="wrap">
+        <h2>What A Normal Reader Should Understand First</h2>
+        <p class="section-intro">
+          If you only read one part of the report, read this. This section answers what feels good about the location, what may become a headache, and what kind of customer spending power the area seems to support.
+        </p>
+        <div class="grid-3">
+          <article class="summary-box">
+            <span class="badge good">What looks good</span>
+            <p class="big-line">The catchment is not weak.</p>
+            <p>
+              This pin sits near both offices and residential societies, which is helpful for repeat pickleball usage.
+              Nearby public booking platforms already show multiple sports venues in the same belt, which means local users already understand and search for paid play.
+            </p>
+          </article>
+          <article class="summary-box">
+            <span class="badge risk">What could frustrate users</span>
+            <p class="big-line">The final arrival may be annoying.</p>
+            <p>
+              The corridor is vehicle-friendly in theory, but road-work history, traffic stress, turn-in quality, parking uncertainty, and poor rainy-day circulation can spoil the experience fast.
+              For this use case, that matters a lot.
+            </p>
+          </article>
+          <article class="summary-box">
+            <span class="badge mixed">Area spending signal</span>
+            <p class="big-line">This feels like a mixed upper-middle urban catchment, not a luxury bubble.</p>
+            <p>
+              Nearby dining prices and paid sports prices suggest people around this belt do spend on eating out, social leisure, and bookable recreation.
+              But the area still looks price-aware, so a premium facility needs visible quality, not just a premium tag.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt">
+      <div class="wrap">
+        <h2>What This Place Feels Like</h2>
+        <div class="grid-2">
+          <div class="summary-box">
+            <p>
+              This is not the kind of place where people casually notice a court while walking and wander in.
+              It feels more like a road-edge destination that people reach deliberately by car, bike, or a short ride.
+            </p>
+            <p>
+              That is not automatically bad. Many sports venues work exactly like this.
+              It simply means the site experience matters more: entry, parking, lighting, washrooms, covered play, and how quickly the place feels worth the trip.
+            </p>
+            <p>
+              The local story is not “there is no market here.” The real story is “there is already a market here, so the exact site has to win on comfort and clarity.”
+            </p>
+          </div>
+          <div class="pin-box">
+            <strong>Pin summary</strong>
+            <div class="pin-coords">18.549390, 73.773619</div>
+            <div class="pin-row">
+              <strong>Immediate context</strong>
+              <span>Highway and service-road edge near ARM Madhuban Tech Park</span>
+            </div>
+            <div class="pin-row">
+              <strong>Named residential edge</strong>
+              <span>Venezia Homes, Peony Housing Society, Silver Dale, Ambrosia Galaxy, Zensistry</span>
+            </div>
+            <div class="pin-row">
+              <strong>Simple reading</strong>
+              <span>Good for a destination venue, weaker as a casual neighborhood walk-in spot</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <h2>How Strong The Sports Catchment Already Looks</h2>
+        <p class="section-intro">
+          A common reader does not need every venue in Pune. What matters is whether this exact belt already behaves like a sports zone where people are used to booking and paying.
+        </p>
+        <div class="table-box">
+          <table>
+            <thead>
+              <tr>
+                <th>Evidence</th>
+                <th>What we saw</th>
+                <th>Simple meaning</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><a href="https://playo.co/venues/baner-pune/sports/pickleball">Playo Baner pickleball page</a></td>
+                <td>76 pickleball venues surfaced for Baner-pune</td>
+                <td>Baner is already a visible pickleball search zone, not a blank market.</td>
+              </tr>
+              <tr>
+                <td><a href="https://playo.co/venues/baner-pashan-link-road-pune/sports/all">Playo Baner-Pashan Link Road sports page</a></td>
+                <td>Pickle Upp, Force Playing Fields, The Life Sports, SkySwing, Aditya Sports Academy visible in the nearby belt</td>
+                <td>The immediate corridor is already a sports corridor, not just a one-venue pocket.</td>
+              </tr>
+              <tr>
+                <td><a href="https://hudle.in/pages/pickleball-courts-in-pune">Hudle Pune pickleball page</a></td>
+                <td>Visible price cues: Rs 99, Rs 300, Rs 300, Rs 650 across nearby venues</td>
+                <td>Users in this wider belt are already paying for bookable sports. Price sensitivity exists, but the behavior is established.</td>
+              </tr>
+              <tr>
+                <td><a href="https://pages.khelomore.com/lp/pune-pickleball-99-camp/index.html">KheloMore Pune pickleball camp page</a></td>
+                <td>Starter camp surfaced at nearby PickleX Pashan</td>
+                <td>The area is not just serving existing players; it is still onboarding new ones too.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt">
+      <div class="wrap">
+        <h2>How Premium Or Affluent This Catchment Feels</h2>
+        <p class="section-intro">
+          This is not a bank-grade income estimate. It is a consumer-spending read built from public platform pricing. The goal is to understand whether the area feels budget, mixed, premium, or strongly premium in real everyday behavior.
+        </p>
+        <div class="grid-3">
+          <article class="card">
+            <strong>Zomato dine-out price for two near this belt</strong>
+            <p>
+              On <a href="https://www.zomato.com/pune/dine-out-in-pashan">Zomato Pashan dine-out</a>, nearby visible examples include Hotel Shivanjali at Rs 1700 for two,
+              Dorf Brewhouse at Rs 1800 for two, Beer &amp; Beans at Rs 1200 for two, Flow at Rs 2300 for two, and Ouza at Rs 2700 for two.
+            </p>
+            <p class="small">
+              This is stronger than a budget-only catchment. It shows real comfort with mid-to-premium social spending in the nearby leisure belt.
+            </p>
+          </article>
+          <article class="card">
+            <strong>Zomato everyday delivery price cues</strong>
+            <p>
+              On <a href="https://www.zomato.com/pune/delivery-in-baner">Baner delivery</a> and
+              <a href="https://www.zomato.com/pune/delivery-in-pashan">Pashan delivery</a>,
+              many mainstream brands sit around Rs 150 to Rs 250 per person, while some fuller meal formats go higher.
+              On <a href="https://www.zomato.com/pune/delivery-in-baner-gaon">Baner Gaon</a>, visible examples range from roughly Rs 100 to Rs 500 per person.
+            </p>
+            <p class="small">
+              This suggests everyday spending is not ultra-premium, but it is not low-budget either. It looks like a mixed upper-middle urban catchment.
+            </p>
+          </article>
+          <article class="card">
+            <strong>Paid recreation price cues from sports apps</strong>
+            <p>
+              Nearby visible sports prices on Hudle range from about Rs 99 to Rs 650 depending on venue and format.
+              That matters because this is closer to the actual spending habit we care about for pickleball than food alone.
+            </p>
+            <p class="small">
+              Simple reading: people around this zone are already used to paying for leisure, but value perception will matter a lot.
+            </p>
+          </article>
+        </div>
+        <div class="summary-box" style="margin-top:14px;">
+          <strong>Affluency read</strong>
+          <p>
+            The cleanest interpretation is: <strong>mixed upper-middle catchment with a premium-leaning leisure corridor nearby.</strong>
+            This does not feel like a pure luxury residential enclave. It feels like a place where mid-to-premium spending is normal when the offering looks worth it.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <h2>The Nearby Competitors A Normal Reader Should Care About</h2>
+        <div class="table-box">
+          <table>
+            <thead>
+              <tr>
+                <th>Venue</th>
+                <th>What is visible publicly</th>
+                <th>Why it matters</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><a href="https://playo.co/venues/pune/picklex-baner-pune">PickleX</a></td>
+                <td>6 AM - 12 AM, parking, washroom, changing room, cafeteria</td>
+                <td>This is the clearest sign that the corridor already supports a reasonably complete pickleball product, not just a bare court.</td>
+              </tr>
+              <tr>
+                <td><a href="https://playo.co/venues/pashan-pune/pickle-upp-pashan-pune">Pickle Upp</a></td>
+                <td>6 AM - 12 AM, parking, restroom</td>
+                <td>Shows there is already an accessible, everyday-use option nearby.</td>
+              </tr>
+              <tr>
+                <td><a href="https://playo.co/venues/baner-pune/force-playing-fields-baner-baner-pune">Force Playing Fields</a></td>
+                <td>Pickleball plus football and box cricket</td>
+                <td>Competes not only on court quality, but also on group-recreation habit and wider sports use.</td>
+              </tr>
+              <tr>
+                <td><a href="https://playo.co/venues/someshwarwadi-pune/the-life-sports-someshwarwadi-baner-someshwarwadi-pune">The Life Sports</a></td>
+                <td>Multi-sport with visible review depth</td>
+                <td>Tells you users already compare facilities in this area instead of choosing blindly.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt">
+      <div class="wrap">
+        <h2>What Could Go Wrong Even If The Catchment Looks Good</h2>
+        <div class="grid-3">
+          <article class="card">
+            <span class="badge risk">Arrival risk</span>
+            <p>
+              <a href="https://indianexpress.com/article/cities/pune/building-pune-finally-pmc-to-appoint-contractor-for-incomplete-stretch-of-baner-pashan-link-road-10615894/">The Indian Express</a>
+              and
+              <a href="https://timesofindia.indiatimes.com/city/pune/pmc-set-to-resume-work-of-baner-pashan-link-road-in-a-month/articleshow/130316429.cms">The Times of India</a>
+              both point to the long-running Baner-Pashan Link Road issue. That matters because one bad final approach can make a good catchment feel tiring.
+            </p>
+          </article>
+          <article class="card">
+            <span class="badge risk">Parking risk</span>
+            <p>
+              Nearby competitors visibly talk about parking. That means users already expect it.
+              If this site does not handle parking and drop-off smoothly, the weakness will be obvious very quickly.
+            </p>
+          </article>
+          <article class="card">
+            <span class="badge risk">Weather risk</span>
+            <p>
+              Nearby public evidence shows outdoor play, but this report still cannot confirm whether the exact pin would handle rain, heat, mud, or covered circulation well enough for repeat use.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <h2>Best Time Windows For This Location</h2>
+        <div class="table-box">
+          <table>
+            <thead>
+              <tr>
+                <th>Time window</th>
+                <th>Simple reading</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Weekday morning</td>
+                <td>Better for coaching, lower-intensity usage, or academy-style formats than for social peak energy.</td>
+              </tr>
+              <tr>
+                <td>Weekday evening</td>
+                <td>This looks like the most important revenue and community window, but also the hardest one for traffic and arrival comfort.</td>
+              </tr>
+              <tr>
+                <td>Weekend morning</td>
+                <td>Strongest for families, beginners, and clinics.</td>
+              </tr>
+              <tr>
+                <td>Weekend evening</td>
+                <td>Strong for social play, leagues, and post-game food hangout behavior if the facility feels clean and safe after dark.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt">
+      <div class="wrap">
+        <h2>What Must Be Physically Checked Before Shortlisting</h2>
+        <div class="grid-4">
+          <article class="card">
+            <strong>Parking count</strong>
+            <p>Count real parking spots and watch vehicle stacking between 6:15 PM and 8:45 PM.</p>
+          </article>
+          <article class="card">
+            <strong>Entry quality</strong>
+            <p>Check whether the turn-in feels easy or irritating for first-time visitors.</p>
+          </article>
+          <article class="card">
+            <strong>Rain behavior</strong>
+            <p>Repeat the visit after rain and see whether the site becomes messy or awkward.</p>
+          </article>
+          <article class="card">
+            <strong>Facility edge</strong>
+            <p>Confirm whether you can clearly beat nearby supply on covered play, lighting, washrooms, seating, or community format.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <h2>How Much Of This Report Feels Solid Vs Tentative</h2>
+        <div class="grid-3">
+          <article class="card">
+            <span class="badge good">Most solid</span>
+            <p>Competition visibility, nearby sports culture, and the broad office-plus-residential nature of the catchment.</p>
+          </article>
+          <article class="card">
+            <span class="badge mixed">Reasonably inferred</span>
+            <p>Affluency read from consumer-platform prices, and the idea that the area can support paid recreation if the offering feels worth the trip.</p>
+          </article>
+          <article class="card">
+            <span class="badge risk">Still needs field proof</span>
+            <p>Parking ease, after-dark comfort, drainage, and whether the exact site can feel better than nearby alternatives in a way users notice immediately.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt">
+      <div class="wrap">
+        <h2>Quick Evidence List</h2>
+        <div class="table-box">
+          <table>
+            <thead>
+              <tr>
+                <th>Source</th>
+                <th>Why it was used</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><a href="https://maps.app.goo.gl/xYnFGG2UqCdoq2uv9">Google Maps pin</a></td>
+                <td>To ground the exact location and nearby labels such as ARM Madhuban Tech Park and surrounding societies.</td>
+              </tr>
+              <tr>
+                <td><a href="https://playo.co/venues/baner-pune/sports/pickleball">Playo Baner pickleball</a> and <a href="https://playo.co/venues/baner-pashan-link-road-pune/sports/all">Playo Baner-Pashan Link Road sports</a></td>
+                <td>To judge whether the area already behaves like a sports and pickleball search zone.</td>
+              </tr>
+              <tr>
+                <td><a href="https://hudle.in/pages/pickleball-courts-in-pune">Hudle Pune pickleball</a></td>
+                <td>To pull nearby visible booking-price cues for paid sports behavior.</td>
+              </tr>
+              <tr>
+                <td><a href="https://pages.khelomore.com/lp/pune-pickleball-99-camp/index.html">KheloMore Pune camp page</a></td>
+                <td>To check whether beginner onboarding is also happening in the local cluster.</td>
+              </tr>
+              <tr>
+                <td><a href="https://www.zomato.com/pune/delivery-in-baner">Zomato Baner delivery</a>, <a href="https://www.zomato.com/pune/delivery-in-pashan">Pashan delivery</a>, <a href="https://www.zomato.com/pune/delivery-in-baner-gaon">Baner Gaon delivery</a>, and <a href="https://www.zomato.com/pune/dine-out-in-pashan">Zomato Pashan dine-out</a></td>
+                <td>To estimate everyday and social-spending posture around the catchment using public food-platform prices.</td>
+              </tr>
+              <tr>
+                <td><a href="https://www.smartworksoffice.com/office-space/pune/amar-madhuban-tech-park/">Smartworks AMTP</a>, <a href="https://www.smartworksoffice.com/office-space/pune/m-agile/">Smartworks M Agile</a>, <a href="https://wework.co.in/pune/baner/eleven-west/">WeWork Eleven West</a></td>
+                <td>To confirm that the nearby office corridor is real and not based only on map labels.</td>
+              </tr>
+              <tr>
+                <td><a href="https://indianexpress.com/article/cities/pune/building-pune-finally-pmc-to-appoint-contractor-for-incomplete-stretch-of-baner-pashan-link-road-10615894/">Indian Express</a> and <a href="https://timesofindia.indiatimes.com/city/pune/pmc-set-to-resume-work-of-baner-pashan-link-road-in-a-month/articleshow/130316429.cms">Times of India</a></td>
+                <td>To understand why access friction on this corridor still matters in real life.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="wrap">
+        This is the plain-English version of the same Baner-Pashan pickleball report. It is designed to help a first-time reader understand the place quickly, while still showing the evidence behind the interpretation.
+      </div>
+    </footer>
+  </body>
+</html>

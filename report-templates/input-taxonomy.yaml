@@ -1,0 +1,592 @@
+version: 1
+product: LocationIQ
+description: >
+  Predefined input values for purpose-aware location intelligence reports.
+  The app should start with location, purpose_category, and sub_purpose,
+  then ask only the context fields relevant to that selection.
+  Reports should be interpretive, evidence-backed, and non-advisory:
+  no final buy/open/invest verdict, no proceed/avoid label, no single overall score,
+  and no user-facing source-quality badge system.
+
+report_mode:
+  type: interpretive_location_intelligence
+  user_owned_decision: true
+  final_advice_label_allowed: false
+  single_overall_rating_allowed: false
+  aspect_signal_indices_allowed: true
+  user_facing_source_quality_badges_allowed: false
+  source_limits_written_in_language: true
+  quantified_evidence_required_where_available: true
+  public_web_gold_enabled: true
+  pin_conditioned_public_collection_required: true
+  partnership_data_bonus_only: true
+  blind_scraping_allowed: false
+
+location_input:
+  accepted_types:
+    - maps_link
+    - latitude_longitude
+    - address
+    - dropped_pin
+    - landmark
+    - locality
+  normalized_fields:
+    - latitude
+    - longitude
+    - address_text
+    - locality
+    - city
+    - district
+    - state
+    - pin_code
+    - geocode_quality_note
+
+global_enums:
+  analysis_radius:
+    - 300m
+    - 500m
+    - 1km
+    - 2km
+    - 3km
+    - 5km
+    - 10km
+    - 10_min_walk
+    - 15_min_walk
+    - 10_min_drive
+    - 15_min_drive
+    - 30_min_drive
+    - custom
+  city_context:
+    - metro
+    - tier_1
+    - tier_2
+    - tier_3
+    - peri_urban
+    - rural_adjacent
+    - tourist_town
+    - industrial_town
+    - education_hub
+  source_collection_class:
+    - official_public
+    - open_map
+    - commercial_api
+    - public_web_gold
+    - imagery_human_review
+    - imagery_machine_usable
+    - field_observation
+    - user_supplied
+  target_audience:
+    - students
+    - young_professionals
+    - office_workers
+    - families_with_children
+    - bachelors
+    - couples
+    - joint_families
+    - senior_citizens
+    - women_first
+    - tourists
+    - patients_and_caregivers
+    - children
+    - fitness_seekers
+    - value_shoppers
+    - premium_consumers
+    - daily_commuters
+    - delivery_customers
+    - small_business_owners
+    - enterprise_teams
+    - fleet_operators
+  lifestyle_or_positioning:
+    - value_convenience
+    - value_for_money
+    - mid_market
+    - premium
+    - family_friendly
+    - student_friendly
+    - women_friendly
+    - quiet_and_green
+    - nightlife_and_food
+    - transit_first
+    - car_dependent
+    - two_wheeler_first
+    - local_market_oriented
+    - health_and_wellness
+    - remote_work_friendly
+    - pet_friendly
+    - religious_or_community_oriented
+  mobility_mode:
+    - walk
+    - cycle
+    - two_wheeler
+    - car
+    - auto
+    - e_rickshaw
+    - cab
+    - bus
+    - metro
+    - suburban_rail
+    - intercity_rail
+    - airport_access
+    - delivery_rider
+    - freight_vehicle
+  time_context:
+    - weekday_morning
+    - weekday_afternoon
+    - weekday_evening
+    - weekday_late_night
+    - weekend_morning
+    - weekend_evening
+    - monsoon
+    - summer_heat
+    - festival_peak
+    - school_hours
+    - office_peak
+  risk_sensitivity:
+    - low
+    - medium
+    - high
+
+aspect_dimensions:
+  access_mobility:
+    description: Commute, road access, public transport, walkability, parking, last-mile quality.
+  market_demand_catchment:
+    description: Nearby audience size, audience fit, footfall, resident/worker/student demand.
+  competition_complementarity:
+    description: Direct competitors, substitutes, complementary anchors, category gaps.
+  daily_social_infra:
+    description: Grocery, healthcare, education, parks, banks, childcare, local services.
+  safety_security:
+    description: Lighting, isolation, crime proxies, accident risk, women/night safety.
+  civic_reliability:
+    description: Water, power, drainage, waste, sewage, road condition, public toilets.
+  environment_resilience:
+    description: AQI, noise, heat, waterlogging, flood, green cover, climate comfort.
+  operations_site_fit:
+    description: Observable operating context such as frontage, visibility, loading, parking cues, utilities, and access control. Must not become a physical-suitability conclusion without measured or field data.
+  exact_pin_truth:
+    description: Exact coordinate handling, reverse geocode, nearest POIs, visual plot envelope, and distinction between selected pin and nearby named places.
+  source_data_limits:
+    description: Source freshness, spatial precision, repeatability, source agreement, and missing data written naturally into report language.
+  lifestyle_audience_fit:
+    description: Cultural fit, positioning fit, daypart match, local behavior match.
+  future_change:
+    description: Metro, road, RERA supply, commercial growth, public works, disruption risk.
+  regulatory_light_check:
+    description: Only high-level flags such as obvious land-use mismatch, RERA presence, civic restrictions.
+
+aspect_signal_labels:
+  - strong_supportive_signal
+  - supportive_signal
+  - mixed_signal
+  - friction_signal
+  - weak_signal
+  - unknown
+  - not_relevant
+
+evidence_metric_types:
+  - poi_count
+  - nearest_distance
+  - travel_time
+  - density
+  - marketplace_listing_count
+  - category_mix
+  - visible_price_band_distribution
+  - delivery_eta
+  - catalog_assortment_count
+  - availability_ratio
+  - booking_venue_count
+  - booking_slot_count
+  - booking_price
+  - promotional_visibility_count
+  - review_volume
+  - review_sentiment_share
+  - rating_distribution
+  - time_window_activity
+  - infrastructure_count
+  - risk_proximity
+  - project_pipeline
+  - observation_count
+  - field_photo
+  - user_supplied_note
+
+purpose_categories:
+  live_relocate:
+    label: Live or relocate
+    understanding_question: What would daily life around this location feel like for this household profile?
+    sub_purposes:
+      - rent_home
+      - buy_primary_home
+      - pg_or_coliving
+      - student_housing
+      - senior_living
+      - family_relocation
+      - second_home
+    required_context:
+      - household_type
+      - commute_anchor
+      - primary_mobility_mode
+      - lifestyle_or_positioning
+      - risk_sensitivity
+    optional_context:
+      - school_preference
+      - healthcare_priority
+      - pets
+      - night_safety_priority
+      - quietness_priority
+      - public_transport_dependency
+    default_aspect_emphasis:
+      access_mobility: 18
+      daily_social_infra: 16
+      safety_security: 15
+      civic_reliability: 13
+      environment_resilience: 12
+      lifestyle_audience_fit: 12
+      future_change: 8
+      source_data_limits: 6
+
+  retail_fnb_site:
+    label: Retail, food, or service business
+    understanding_question: What customer movement, nearby ecosystem, and operating reality does this location show?
+    sub_purposes:
+      - cafe
+      - quick_service_restaurant
+      - restaurant
+      - cloud_kitchen
+      - grocery_or_kirana
+      - pharmacy
+      - salon_or_spa
+      - fashion_or_electronics_store
+      - franchise_store
+      - street_kiosk
+      - pet_store
+      - bakery_or_dessert
+    required_context:
+      - business_format
+      - target_audience
+      - lifestyle_or_positioning
+      - daypart_priority
+      - frontage_need
+      - parking_need
+    optional_context:
+      - delivery_dependency
+      - dine_in_dependency
+      - repeat_purchase_dependency
+      - brand_or_franchise
+      - seating_need
+      - expected_visit_duration
+    default_aspect_emphasis:
+      market_demand_catchment: 23
+      access_mobility: 18
+      competition_complementarity: 16
+      operations_site_fit: 14
+      lifestyle_audience_fit: 11
+      civic_reliability: 7
+      environment_resilience: 5
+      future_change: 3
+      source_data_limits: 3
+
+  fitness_sports:
+    label: Fitness, gym, sports, or recreation
+    understanding_question: What repeat sports/recreation audience, access pattern, and time-window behavior does this location show?
+    sub_purposes:
+      - gym
+      - yoga_or_pilates_studio
+      - dance_studio
+      - sports_academy
+      - turf_or_court_booking
+      - pickleball_facility
+      - swimming_or_indoor_sports
+      - kids_activity_center
+      - martial_arts
+    required_context:
+      - target_audience
+      - age_group
+      - primary_mobility_mode
+      - time_context
+      - parking_need
+    optional_context:
+      - women_first
+      - children_focused
+      - positioning_tier
+      - indoor_outdoor_covered_format
+      - coaching_or_booking_model
+      - batch_timing
+      - equipment_or_space_need
+    default_aspect_emphasis:
+      market_demand_catchment: 22
+      access_mobility: 18
+      lifestyle_audience_fit: 15
+      competition_complementarity: 13
+      safety_security: 10
+      exact_pin_truth: 5
+      operations_site_fit: 5
+      civic_reliability: 5
+      environment_resilience: 4
+      source_data_limits: 3
+
+  education_childcare:
+    label: Education, coaching, or childcare
+    understanding_question: What student/parent catchment, access safety, trust signals, and daily operating context does this location show?
+    sub_purposes:
+      - preschool
+      - school
+      - coaching_center
+      - skill_training_center
+      - tuition_center
+      - daycare
+      - student_hostel_or_pg
+    required_context:
+      - age_group
+      - target_audience
+      - commute_mode
+      - safety_priority
+      - time_context
+    optional_context:
+      - board_or_exam
+      - parent_waiting_need
+      - pickup_drop_need
+      - hostel_need
+      - after_school_activity_need
+    default_aspect_emphasis:
+      market_demand_catchment: 20
+      access_mobility: 18
+      safety_security: 16
+      daily_social_infra: 14
+      competition_complementarity: 10
+      civic_reliability: 8
+      lifestyle_audience_fit: 7
+      environment_resilience: 4
+      source_data_limits: 3
+
+  healthcare_wellness:
+    label: Healthcare or wellness
+    understanding_question: What patient/caregiver access, healthcare ecosystem, and repeat-visit practicality does this location show?
+    sub_purposes:
+      - clinic
+      - diagnostic_center
+      - pharmacy
+      - dental_or_eye_clinic
+      - physiotherapy
+      - elder_care
+      - hospital_access_for_living
+    required_context:
+      - patient_profile
+      - specialty
+      - accessibility_need
+      - operating_hours
+      - target_audience
+    optional_context:
+      - emergency_need
+      - ambulance_access_need
+      - elderly_or_disabled_access
+      - caregiver_waiting_need
+    default_aspect_emphasis:
+      market_demand_catchment: 19
+      access_mobility: 18
+      daily_social_infra: 15
+      operations_site_fit: 12
+      safety_security: 10
+      competition_complementarity: 9
+      civic_reliability: 7
+      environment_resilience: 5
+      source_data_limits: 5
+
+  office_workspace:
+    label: Office or workspace
+    understanding_question: What employee, client, vendor, and daily operating context does this location create?
+    sub_purposes:
+      - startup_office
+      - corporate_office
+      - coworking
+      - sales_branch
+      - back_office_or_bpo
+      - professional_services_office
+    required_context:
+      - team_profile
+      - employee_commute_mode
+      - client_visit_frequency
+      - operating_hours
+      - parking_need
+    optional_context:
+      - hybrid_work_ratio
+      - late_shift
+      - grade_requirement
+      - hiring_catchment
+      - internet_reliability_priority
+    default_aspect_emphasis:
+      access_mobility: 22
+      market_demand_catchment: 16
+      operations_site_fit: 14
+      civic_reliability: 12
+      safety_security: 10
+      lifestyle_audience_fit: 9
+      competition_complementarity: 6
+      future_change: 6
+      source_data_limits: 5
+
+  logistics_industrial:
+    label: Logistics, warehouse, or industrial
+    understanding_question: What goods movement, vehicle access, labor, utility, and operating-friction context does this location show?
+    sub_purposes:
+      - warehouse
+      - dark_store
+      - last_mile_hub
+      - manufacturing_unit
+      - cold_chain
+      - fleet_parking
+      - mandi_or_procurement_point
+    required_context:
+      - vehicle_type
+      - service_radius
+      - operating_hours
+      - loading_need
+      - power_or_utility_need
+    optional_context:
+      - inventory_type
+      - labor_need
+      - cold_storage_need
+      - highway_access_priority
+      - delivery_sla
+    default_aspect_emphasis:
+      operations_site_fit: 22
+      access_mobility: 21
+      civic_reliability: 13
+      regulatory_light_check: 11
+      market_demand_catchment: 10
+      environment_resilience: 8
+      safety_security: 6
+      future_change: 5
+      source_data_limits: 4
+
+  travel_leisure:
+    label: Travel, leisure, or short stay
+    understanding_question: What convenience, safety, comfort, and experience context does this location create for the trip purpose?
+    sub_purposes:
+      - hotel_or_homestay
+      - tourist_day_plan
+      - family_outing
+      - nightlife_or_dining
+      - religious_visit
+      - workation
+      - event_trip
+    required_context:
+      - traveler_type
+      - travel_mode
+      - time_context
+      - lifestyle_or_positioning
+      - safety_priority
+    optional_context:
+      - group_size
+      - duration
+      - interest_tags
+      - accessibility_need
+      - late_night_need
+    default_aspect_emphasis:
+      access_mobility: 19
+      daily_social_infra: 15
+      safety_security: 14
+      lifestyle_audience_fit: 13
+      market_demand_catchment: 11
+      civic_reliability: 9
+      environment_resilience: 8
+      competition_complementarity: 6
+      source_data_limits: 5
+
+context_field_values:
+  household_type:
+    - single
+    - couple
+    - bachelors
+    - nuclear_family
+    - joint_family
+    - senior_citizens
+    - student_group
+  business_format:
+    - walk_in_first
+    - delivery_first
+    - appointment_first
+    - dine_in_first
+    - takeaway_first
+    - hybrid_online_offline
+    - franchise
+  daypart_priority:
+    - morning
+    - lunch
+    - afternoon
+    - evening
+    - late_night
+    - weekend
+    - all_day
+  frontage_need:
+    - not_important
+    - helpful
+    - important
+    - critical
+  parking_need:
+    - none
+    - two_wheeler
+    - car
+    - mixed
+    - heavy_vehicle
+  safety_priority:
+    - normal
+    - high
+    - very_high
+  age_group:
+    - kids
+    - school_age
+    - college_age
+    - adults
+    - seniors
+    - mixed
+  operating_hours:
+    - daytime
+    - early_morning
+    - evening
+    - late_night
+    - 24x7
+    - split_shifts
+  indoor_outdoor_covered_format:
+    - indoor
+    - outdoor
+    - covered
+    - semi_covered
+    - mixed
+    - unknown
+  coaching_or_booking_model:
+    - open_booking
+    - membership
+    - coaching
+    - corporate_leagues
+    - academy
+    - mixed
+  accessibility_need:
+    - normal
+    - elderly_friendly
+    - wheelchair_friendly
+    - ambulance_access
+    - child_safe
+  vehicle_type:
+    - two_wheeler
+    - three_wheeler
+    - light_commercial_vehicle
+    - truck
+    - container
+    - mixed_fleet
+  service_radius:
+    - 1km
+    - 3km
+    - 5km
+    - 10km
+    - 15km
+    - 30km
+    - citywide
+  traveler_type:
+    - solo
+    - couple
+    - family
+    - friends_group
+    - senior_citizen
+    - business_traveler
+    - pilgrim
+    - tourist

@@ -1,0 +1,1093 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>LocationIQ V4 - Pickleball Facility Location Read - Hinjawadi Phase 1</title>
+    <style>
+      :root {
+        --paper: #f4f7f4;
+        --ink: #18231a;
+        --muted: #5b695f;
+        --soft: #eaf2f1;
+        --panel: #ffffff;
+        --line: #d8ddd3;
+        --green: #1f7a5b;
+        --green-soft: #dcefe5;
+        --amber: #a5681a;
+        --amber-soft: #f6ead4;
+        --red: #a34234;
+        --red-soft: #f4ddd8;
+        --blue: #2f627d;
+        --blue-soft: #dbeaf0;
+        --shadow: 0 18px 44px rgba(26, 35, 28, 0.08);
+        --radius: 6px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        line-height: 1.55;
+        overflow-x: hidden;
+      }
+
+      a {
+        color: var(--green);
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      .wrap {
+        width: min(1180px, calc(100% - 40px));
+        margin: 0 auto;
+      }
+
+      .hero {
+        min-height: 64vh;
+        display: flex;
+        align-items: end;
+        color: #f7fbf7;
+        background-image:
+          linear-gradient(180deg, rgba(17, 29, 23, 0.12), rgba(17, 29, 23, 0.86)),
+          url("https://images.pexels.com/photos/14982688/pexels-photo-14982688.jpeg?auto=compress&cs=tinysrgb&w=1800");
+        background-position: center;
+        background-size: cover;
+        padding: 38px 0 44px;
+      }
+
+      .eyebrow {
+        margin: 0 0 14px;
+        color: rgba(247, 251, 247, 0.78);
+        font-size: 0.82rem;
+        text-transform: uppercase;
+      }
+
+      h1,
+      h2,
+      h3 {
+        margin: 0;
+        line-height: 1.08;
+      }
+
+      h1 {
+        max-width: 1040px;
+        margin-bottom: 16px;
+        font-size: clamp(2rem, 4.5rem, 4.5rem);
+        overflow-wrap: anywhere;
+      }
+
+      h2 {
+        margin-bottom: 10px;
+        font-size: clamp(1.55rem, 2.25rem, 2.25rem);
+      }
+
+      h3 {
+        margin-bottom: 9px;
+        font-size: 1.05rem;
+      }
+
+      .hero-copy,
+      .hero-note {
+        max-width: 880px;
+        margin: 0 0 20px;
+        color: rgba(247, 251, 247, 0.9);
+        font-size: 1.03rem;
+      }
+
+      .hero-note {
+        color: rgba(247, 251, 247, 0.74);
+        font-size: 0.94rem;
+      }
+
+      .hero-grid,
+      .metric-grid,
+      .reader-grid,
+      .visual-grid,
+      .two-col,
+      .three-col,
+      .four-col {
+        display: grid;
+        gap: 14px;
+      }
+
+      .hero-grid {
+        grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+        max-width: 1000px;
+      }
+
+      .hero-tag {
+        min-height: 84px;
+        padding: 14px;
+        border: 1px solid rgba(247, 251, 247, 0.24);
+        border-radius: var(--radius);
+        background: rgba(15, 26, 18, 0.28);
+      }
+
+      .hero-tag strong,
+      .metric-label,
+      .tiny,
+      .caption {
+        display: block;
+        color: var(--muted);
+        font-size: 0.78rem;
+        text-transform: uppercase;
+      }
+
+      .hero-tag strong {
+        color: rgba(247, 251, 247, 0.74);
+      }
+
+      .hero-tag span {
+        display: block;
+        margin-top: 6px;
+        font-weight: 800;
+      }
+
+      section {
+        padding: 54px 0;
+      }
+
+      .soft {
+        background: var(--soft);
+      }
+
+      .panel,
+      .metric,
+      .tile,
+      .chart-shell,
+      .map-card {
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--panel);
+        box-shadow: var(--shadow);
+      }
+
+      .metric-strip {
+        margin-top: -34px;
+        position: relative;
+        z-index: 2;
+      }
+
+      .metric-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .metric {
+        min-height: 142px;
+        padding: 18px;
+      }
+
+      .metric-value {
+        display: block;
+        margin: 10px 0 7px;
+        font-size: 1.68rem;
+        font-weight: 900;
+        letter-spacing: 0;
+      }
+
+      .metric-note {
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+
+      .section-copy {
+        max-width: 850px;
+        margin: 0 0 24px;
+        color: var(--muted);
+      }
+
+      .reader-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .tile,
+      .panel,
+      .chart-shell,
+      .map-card {
+        padding: 18px;
+      }
+
+      .chip {
+        display: inline-block;
+        margin-bottom: 14px;
+        padding: 5px 9px;
+        border-radius: var(--radius);
+        background: var(--green-soft);
+        color: var(--green);
+        font-size: 0.82rem;
+        font-weight: 800;
+      }
+
+      .chip.amber {
+        background: var(--amber-soft);
+        color: var(--amber);
+      }
+
+      .chip.red {
+        background: var(--red-soft);
+        color: var(--red);
+      }
+
+      .chip.blue {
+        background: var(--blue-soft);
+        color: var(--blue);
+      }
+
+      .big-line {
+        margin: 0 0 8px;
+        font-size: 1.18rem;
+        font-weight: 900;
+        line-height: 1.2;
+      }
+
+      .visual-grid {
+        grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+        align-items: stretch;
+      }
+
+      .two-col {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .three-col {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .four-col {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .map-card {
+        overflow: hidden;
+        padding: 0;
+      }
+
+      .mock-map {
+        position: relative;
+        min-height: 520px;
+        overflow: hidden;
+        background:
+          radial-gradient(circle at 50% 50%, rgba(31, 122, 91, 0.25), transparent 8%),
+          linear-gradient(115deg, rgba(209, 218, 205, 0.86), rgba(235, 239, 227, 0.88)),
+          repeating-linear-gradient(38deg, rgba(72, 92, 76, 0.18) 0 2px, transparent 2px 42px);
+      }
+
+      .mock-map::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(90deg, transparent 0 11%, rgba(58, 76, 65, 0.26) 11% 13%, transparent 13% 100%),
+          linear-gradient(175deg, transparent 0 50%, rgba(62, 80, 70, 0.28) 50% 53%, transparent 53% 100%),
+          linear-gradient(25deg, transparent 0 63%, rgba(62, 80, 70, 0.2) 63% 65%, transparent 65% 100%);
+      }
+
+      .plot-highlight {
+        position: absolute;
+        left: 39%;
+        top: 33%;
+        width: 22%;
+        height: 20%;
+        border: 3px solid var(--green);
+        border-radius: var(--radius);
+        background: rgba(31, 122, 91, 0.2);
+        box-shadow: 0 0 0 999px rgba(15, 28, 20, 0.03);
+      }
+
+      .pin {
+        position: absolute;
+        left: calc(50% - 13px);
+        top: calc(43% - 26px);
+        width: 26px;
+        height: 26px;
+        border: 4px solid #ffffff;
+        border-radius: 50%;
+        background: var(--red);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+      }
+
+      .map-label {
+        position: absolute;
+        max-width: 210px;
+        padding: 9px 10px;
+        border: 1px solid rgba(24, 35, 26, 0.16);
+        border-radius: var(--radius);
+        background: rgba(255, 255, 255, 0.92);
+        color: var(--ink);
+        font-size: 0.84rem;
+        box-shadow: 0 10px 24px rgba(24, 35, 26, 0.12);
+      }
+
+      .label-road {
+        left: 7%;
+        top: 20%;
+      }
+
+      .label-blue {
+        right: 7%;
+        top: 14%;
+      }
+
+      .label-operator {
+        right: 11%;
+        bottom: 22%;
+      }
+
+      .label-entry {
+        left: 19%;
+        bottom: 14%;
+      }
+
+      .label-pin {
+        left: 52%;
+        top: 52%;
+      }
+
+      .map-caption {
+        padding: 14px 16px;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      .mini-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .mini-list li {
+        padding: 13px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .mini-list li:last-child {
+        border-bottom: 0;
+      }
+
+      .mini-list strong {
+        display: block;
+        margin-bottom: 4px;
+      }
+
+      .map-frame {
+        height: 380px;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: #dde6db;
+      }
+
+      .map-frame iframe {
+        display: block;
+        width: 100%;
+        height: 100%;
+        border: 0;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: var(--panel);
+      }
+
+      .table-shell {
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+      }
+
+      th,
+      td {
+        padding: 14px;
+        border-bottom: 1px solid var(--line);
+        text-align: left;
+        vertical-align: top;
+      }
+
+      th {
+        background: #f8faf6;
+        color: var(--muted);
+        font-size: 0.76rem;
+        text-transform: uppercase;
+      }
+
+      tr:last-child td {
+        border-bottom: 0;
+      }
+
+      .status {
+        display: inline-block;
+        margin-top: 5px;
+        padding: 4px 8px;
+        border-radius: var(--radius);
+        background: var(--blue-soft);
+        color: var(--blue);
+        font-size: 0.78rem;
+        font-weight: 800;
+      }
+
+      .status.warn {
+        background: var(--amber-soft);
+        color: var(--amber);
+      }
+
+      .bar-group {
+        display: grid;
+        gap: 12px;
+      }
+
+      .bar-row {
+        display: grid;
+        grid-template-columns: 145px 1fr 70px;
+        align-items: center;
+        gap: 12px;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      .bar-track {
+        height: 10px;
+        overflow: hidden;
+        border-radius: var(--radius);
+        background: #e3e8df;
+      }
+
+      .bar-fill {
+        height: 100%;
+        border-radius: var(--radius);
+        background: var(--green);
+      }
+
+      .bar-fill.amber {
+        background: var(--amber);
+      }
+
+      .bar-fill.red {
+        background: var(--red);
+      }
+
+      .journey {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+      }
+
+      .journey-step {
+        min-height: 176px;
+        padding: 16px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--panel);
+      }
+
+      .step-num {
+        display: inline-grid;
+        width: 28px;
+        height: 28px;
+        place-items: center;
+        margin-bottom: 12px;
+        border-radius: 50%;
+        background: var(--green);
+        color: #ffffff;
+        font-weight: 900;
+      }
+
+      .photo-strip {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+      }
+
+      .photo-card {
+        min-height: 180px;
+        display: flex;
+        flex-direction: column;
+        justify-content: end;
+        padding: 14px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background:
+          linear-gradient(180deg, transparent, rgba(22, 33, 25, 0.76)),
+          linear-gradient(135deg, #8ea48e, #d9dfd4);
+        color: #ffffff;
+      }
+
+      .photo-card strong {
+        display: block;
+        font-size: 1rem;
+      }
+
+      .photo-card span {
+        color: rgba(255, 255, 255, 0.78);
+        font-size: 0.84rem;
+      }
+
+      footer {
+        padding: 26px 0 40px;
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+
+      @media (max-width: 980px) {
+        .metric-grid,
+        .reader-grid,
+        .hero-grid,
+        .visual-grid,
+        .two-col,
+        .three-col,
+        .four-col,
+        .journey,
+        .photo-strip {
+          grid-template-columns: 1fr;
+        }
+
+        .mock-map {
+          min-height: 430px;
+        }
+      }
+
+      @media (max-width: 620px) {
+        .wrap {
+          width: calc(100vw - 26px);
+          max-width: calc(100vw - 26px);
+        }
+
+        .hero {
+          min-height: 72vh;
+        }
+
+        h1 {
+          font-size: 1.85rem;
+        }
+
+        .bar-row {
+          grid-template-columns: 96px 1fr 58px;
+          gap: 8px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="hero">
+      <div class="wrap">
+        <p class="eyebrow">Pickleball facility location read</p>
+        <h1>You are looking at a plot inside an active sports pocket, not a blank location</h1>
+        <p class="hero-copy">
+          The selected coordinate is <a href="https://maps.app.goo.gl/T5bHbKyUutUAnXpP7">18.576742, 73.736961</a> in Hinjawadi Phase 1. The safest way to read it is as the exact pin first, then the nearby operators, then the wider Blue Ridge and IT-park catchment. The report does not rename the pin after the nearest POI, because that is exactly how location reports lose trust.
+        </p>
+        <p class="hero-note">
+          Purpose lens: setting up a pickleball facility. This report focuses on what the location suggests, what is visibly nearby, and what must be checked on the ground. It does not give an invest or open verdict.
+        </p>
+        <div class="hero-grid">
+          <div class="hero-tag">
+            <strong>Selected pin</strong>
+            <span>18.576742, 73.736961</span>
+          </div>
+          <div class="hero-tag">
+            <strong>Nearest locality read</strong>
+            <span>Blue Ridge / Hinjawadi Phase 1</span>
+          </div>
+          <div class="hero-tag">
+            <strong>Business lens</strong>
+            <span>After-work and weekend pickleball demand</span>
+          </div>
+          <div class="hero-tag">
+            <strong>Updated</strong>
+            <span>25 Apr 2026</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="wrap metric-strip">
+      <div class="metric-grid">
+        <div class="metric">
+          <span class="metric-label">Exact-pin handling</span>
+          <span class="metric-value">Pin first</span>
+          <span class="metric-note">Google Maps opens the selected coordinate near sports activity; the report does not assume the named POI is the plot identity.</span>
+        </div>
+        <div class="metric">
+          <span class="metric-label">Pickleball market surface</span>
+          <span class="metric-value">80</span>
+          <span class="metric-note"><a href="https://playo.co/venues/hinjewadi-pune/sports/pickleball">Playo Hinjewadi</a> currently surfaces 80 pickleball venues/coaching/events/memberships in its locality page.</span>
+        </div>
+        <div class="metric">
+          <span class="metric-label">Nearby operator cue</span>
+          <span class="metric-value">Rs 250+</span>
+          <span class="metric-note"><a href="https://hudle.in/venues/the-pickle-point-hinjewadi/683106">Hudle</a> lists The Pickle Point from Rs 250 onwards, but this is not normalized without slot-duration scrape.</span>
+        </div>
+        <div class="metric">
+          <span class="metric-label">Main uncertainty</span>
+          <span class="metric-value">Arrival</span>
+          <span class="metric-note">The market looks active. The harder question is whether your exact plot feels easy to find, park at, and use in the evening.</span>
+        </div>
+      </div>
+    </div>
+
+    <section>
+      <div class="wrap">
+        <h2>Read This First</h2>
+        <p class="section-copy">
+          The useful reading is not "this is good because a sports venue nearby is busy." The stronger reading is that several different signals point in the same direction, while the exact plot still needs a very practical visit.
+        </p>
+        <div class="reader-grid">
+          <article class="tile">
+            <span class="chip">What looks encouraging</span>
+            <p class="big-line">The pin sits inside an already active sports and township belt.</p>
+            <p>
+              The Pickle Point has public pages on <a href="https://playo.co/venues/hinjewadi-pune/the-pickle-point-hinjewadi-pune">Playo</a> and <a href="https://hudle.in/venues/the-pickle-point-hinjewadi/683106">Hudle</a>, nearby Playo listings show multiple pickleball venues within the Hinjawadi surface, and Blue Ridge creates an everyday residential base close to the pin.
+            </p>
+          </article>
+          <article class="tile">
+            <span class="chip amber">What can still hurt you</span>
+            <p class="big-line">A strong corridor can still give users a weak arrival experience.</p>
+            <p>
+              For a paid sports facility, a bad last 500 meters can matter as much as the broader demand story. The report therefore treats access, entry clarity, parking, and rain-day movement as things to verify, not as assumptions.
+            </p>
+          </article>
+          <article class="tile">
+            <span class="chip blue">What the market tells you</span>
+            <p class="big-line">Users nearby can compare options quickly.</p>
+            <p>
+              Playo currently lists Dink, Arena X, Pickle &amp; Pitch, Amrit Sports Village, Pickle Arena, The Pickle Point, Decathlon Wakad, IPOP Wakad, My Sports Club, Picklenation, and more on the Hinjawadi pickleball surface. That makes the offer and experience sharper than a one-venue market.
+            </p>
+          </article>
+          <article class="tile">
+            <span class="chip red">What you should not conclude yet</span>
+            <p class="big-line">Do not judge plot fit from this report.</p>
+            <p>
+              This report does not claim how many courts fit, whether drainage works, or whether parking is sufficient. Those need measured plot data, photos, and a site visit.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="soft">
+      <div class="wrap">
+        <h2>Exact Pin And Plot View</h2>
+        <p class="section-copy">
+          The first trust test is simple: does the report respect the pin you gave? Here, the selected coordinate remains the anchor. The visual below is an illustrative orientation view; a live report should use Google Maps satellite imagery, reverse geocoding, and Street View screenshots.
+        </p>
+        <div class="visual-grid">
+          <div class="map-card">
+            <div class="mock-map" role="img" aria-label="Illustrative exact-pin visual showing highlighted plot area, road approach, Blue Ridge edge, and nearby operators">
+              <div class="plot-highlight"></div>
+              <div class="pin"></div>
+              <div class="map-label label-road"><strong>Road edge</strong><br>Main approach side to verify at peak hour.</div>
+              <div class="map-label label-blue"><strong>Blue Ridge side</strong><br>Residential and convenience catchment nearby.</div>
+              <div class="map-label label-operator"><strong>Nearby operators</strong><br>The Pickle Point and other sports activity are useful context, not pin identity.</div>
+              <div class="map-label label-entry"><strong>Entry question</strong><br>Confirm final turn, drop-off, and parking flow physically.</div>
+              <div class="map-label label-pin"><strong>Selected pin</strong><br>18.576742, 73.736961</div>
+            </div>
+            <div class="map-caption">
+              Illustrative view for this test. A live report should use Google satellite/map tiles with the exact marker and a highlighted visual plot area. If legal cadastral geometry is unavailable, the caption must say "visual highlight, not legal boundary."
+            </div>
+          </div>
+          <div class="panel">
+            <h3>What can be accurate from remote data</h3>
+            <ul class="mini-list">
+              <li><strong>Exact marker:</strong> the coordinate itself can be placed accurately on a map.</li>
+              <li><strong>Nearby named places:</strong> Google Places and user-facing map surfaces can identify nearby POIs, but the nearest POI should not rename the plot.</li>
+              <li><strong>Approach context:</strong> roads, turns, and surrounding land use can be read from map and Street View coverage where available.</li>
+              <li><strong>Plot outline:</strong> a visual plot area can be highlighted when visible on satellite imagery, but it is not a legal boundary unless matched to reliable cadastral data.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <h2>Location Story From Multiple Anchors</h2>
+        <p class="section-copy">
+          No single venue should carry the demand story. This location is better read as a basket of signals: exact pin, nearby sports operators, pickleball supply, residential catchment, office catchment, and convenience spend.
+        </p>
+        <div class="table-shell">
+          <table>
+            <thead>
+              <tr>
+                <th>Layer</th>
+                <th>What is visible</th>
+                <th>How it should shape your view</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Exact pin</td>
+                <td>The selected Google Maps coordinate is the only canonical location input.</td>
+                <td>Use nearby POIs for context, but keep the site visit focused on this exact plot, its access, and its visible edges.</td>
+              </tr>
+              <tr>
+                <td>Adjacent operator context</td>
+                <td><a href="https://thepicklepoint.in/">The Pickle Point</a> publicly positions itself around pickleball, food, lounge value, events, and easy booking. Playo also lists parking, cafe, refreshments, restroom, and paddle rental at Rs 50/hr.</td>
+                <td>The nearby offer is not just a bare court. A new facility nearby must be judged against comfort, hangout value, and booking ease.</td>
+              </tr>
+              <tr>
+                <td>Same-category market</td>
+                <td><a href="https://playo.co/venues/hinjewadi-pune/sports/pickleball">Playo's Hinjawadi pickleball page</a> shows 80 locality results and multiple bookable options around the corridor.</td>
+                <td>This is already a searchable pickleball market. Differentiation will matter more than simply being first.</td>
+              </tr>
+              <tr>
+                <td>Residential anchor</td>
+                <td>Blue Ridge is the closest recognizable township context, with retail, food, and everyday convenience around the pin.</td>
+                <td>The resident base can support repeat evening and weekend usage, but only if arrival and booking are easy.</td>
+              </tr>
+              <tr>
+                <td>Office anchor</td>
+                <td>Rajiv Gandhi Infotech Park Phase 1 gives the area a natural after-work sports story.</td>
+                <td>Weekday evening is the most important field-test window, not quiet afternoon.</td>
+              </tr>
+              <tr>
+                <td>Convenience and spend</td>
+                <td>Local food and leisure surfaces are strong enough to indicate casual spend, but most food-price signals are locality-level rather than exact-pin level.</td>
+                <td>Use food and quick-commerce surfaces as spending context, not as a precise income estimate.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="soft">
+      <div class="wrap">
+        <h2>Catchment And Reach</h2>
+        <p class="section-copy">
+          A complete report should show 5, 10, and 15 minute drive-time rings from Google Routes. This page uses an open map view for orientation and explains what each ring should answer.
+        </p>
+        <div class="visual-grid">
+          <div>
+            <div class="map-frame">
+              <iframe title="Open map view centered on the selected Hinjawadi pin" src="https://www.openstreetmap.org/export/embed.html?bbox=73.7200%2C18.5650%2C73.7600%2C18.5920&amp;layer=mapnik&amp;marker=18.576742%2C73.736961"></iframe>
+            </div>
+            <p class="caption">
+              This page uses OpenStreetMap only for lightweight preview. The live user-facing map should use Google Maps for maps, routing, reverse geocoding, and Street View where available.
+            </p>
+          </div>
+          <div class="panel">
+            <h3>What the catchment map should make obvious</h3>
+            <ul class="mini-list">
+              <li><strong>5 minutes:</strong> Blue Ridge, immediate Phase 1 residents, and the nearest sports cluster.</li>
+              <li><strong>10 minutes:</strong> office workers and nearby residential pockets who can play after work if arrival is frictionless.</li>
+              <li><strong>15 minutes:</strong> users comparing Hinjawadi, Wakad, Phase 2, Phase 3, and other bookable courts.</li>
+              <li><strong>Peak-hour variant:</strong> the evening ring should be different from the no-traffic ring. That is the version that matters most.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <h2>Arrival Reality</h2>
+        <p class="section-copy">
+          For this purpose, the location story is not complete until the first five minutes of arrival are clear. The broader demand can be real and the exact plot can still feel tiring.
+        </p>
+        <div class="journey">
+          <div class="journey-step">
+            <span class="step-num">1</span>
+            <h3>Main road approach</h3>
+            <p>Check the route during the weekday evening window. Reports of Hinjawadi traffic disruption are corridor-level, so this exact approach still needs verification.</p>
+          </div>
+          <div class="journey-step">
+            <span class="step-num">2</span>
+            <h3>Final turn</h3>
+            <p>Observe whether a first-time visitor can identify the turn without overshooting or blocking traffic.</p>
+          </div>
+          <div class="journey-step">
+            <span class="step-num">3</span>
+            <h3>Drop-off and parking</h3>
+            <p>Do not assume parking capacity from a public listing. Watch actual stacking, reversing, and drop-off behavior.</p>
+          </div>
+          <div class="journey-step">
+            <span class="step-num">4</span>
+            <h3>Walk-in feel</h3>
+            <p>Notice lighting, surface condition, rain mess, waiting comfort, and whether the place feels easy after a workday commute.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="soft">
+      <div class="wrap">
+        <h2>Numbers That Make The Story Real</h2>
+        <p class="section-copy">
+          These numbers are useful because they help you see the market around the pin. They are not a verdict.
+        </p>
+        <div class="table-shell">
+          <table>
+            <thead>
+              <tr>
+                <th>Signal</th>
+                <th>Number</th>
+                <th>What it means</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Hinjewadi pickleball surface</td>
+                <td>80 Playo results</td>
+                <td><a href="https://playo.co/venues/hinjewadi-pune/sports/pickleball">Playo's locality page</a> currently shows 80 pickleball venue/coaching/event/membership results. Treat this as platform visibility, not total universe size.</td>
+              </tr>
+              <tr>
+                <td>Nearby bookable operators</td>
+                <td>Multiple within the Hinjawadi surface</td>
+                <td>Dink, Arena X, Pickle &amp; Pitch, Amrit Sports Village, Pickle Arena, The Pickle Point, Picklenation, Decathlon Wakad, and others appear in the public list.</td>
+              </tr>
+              <tr>
+                <td>The Pickle Point public booking cue</td>
+                <td>6 outdoor facilities / sessions, Rs 250 onwards</td>
+                <td><a href="https://hudle.in/venues/the-pickle-point-hinjewadi/683106">Hudle</a> lists six outdoor pickleball facilities/sessions. The price is a cue only until slot duration and unit are scraped.</td>
+              </tr>
+              <tr>
+                <td>Pickle Arena public booking cue</td>
+                <td>2 indoor facilities / sessions, Rs 250 onwards</td>
+                <td><a href="https://hudle.in/venues/pickle-arena-phase-1-hinjewadi/305310">Hudle</a> lists indoor pickleball availability nearby. Indoor comfort matters because weather can change the comparison.</td>
+              </tr>
+              <tr>
+                <td>Adjacent operator amenities</td>
+                <td>Parking, cafe, refreshments, restroom</td>
+                <td><a href="https://playo.co/venues/hinjewadi-pune/the-pickle-point-hinjewadi-pune">Playo</a> lists these amenities for The Pickle Point. A nearby new offer should not compete only on court presence.</td>
+              </tr>
+              <tr>
+                <td>Equipment rental cue</td>
+                <td>Rs 50/hr paddle rental</td>
+                <td>Playo lists paddle rental for The Pickle Point. This supports first-timer accessibility, but rental quality and availability still need a visit.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <h2>Competition And Pricing</h2>
+        <p class="section-copy">
+          Pricing should be normalized from slot-level scrapes on Playo, Hudle, KheloMore, and similar platforms. This report does not pretend to normalize prices when slot duration and unit are not fully captured.
+        </p>
+        <div class="table-shell">
+          <table>
+            <thead>
+              <tr>
+                <th>Venue</th>
+                <th>Public facts visible in this pass</th>
+                <th>Price handling</th>
+                <th>What you can use it for</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><a href="https://playo.co/venues/hinjewadi-pune/the-pickle-point-hinjewadi-pune">The Pickle Point</a></td>
+                <td>6AM-11PM on Playo; parking, cafe, refreshments, restroom; paddle rental Rs 50/hr; Hudle lists outdoor pickleball and Rs 250 onwards.</td>
+                <td><span class="status warn">Not normalized here</span></td>
+                <td>Adjacent operator benchmark for comfort, booking, and casual-user friendliness.</td>
+              </tr>
+              <tr>
+                <td><a href="https://playo.co/venues/pune/dink-pickleball-club-hinjewadi-pune">Dink Pickleball Club</a></td>
+                <td>7AM-12AM on Playo; parking, cafe, washroom, changing room; listed around 0.3 km on Playo's Hinjawadi surface.</td>
+                <td><span class="status warn">Needs slot scrape</span></td>
+                <td>Very close comfort competitor; compare amenities and evening availability.</td>
+              </tr>
+              <tr>
+                <td><a href="https://playo.co/venues/pune/arena-x-hinjawadi-hinjewadi-pune">Arena X - Hinjawadi</a></td>
+                <td>6AM-11PM on Playo; parking, washroom, changing room, warm-up area, reception lounge, upper view deck, WiFi.</td>
+                <td><span class="status warn">Needs slot scrape</span></td>
+                <td>Shows that users can compare polished support amenities, not just courts.</td>
+              </tr>
+              <tr>
+                <td><a href="https://hudle.in/venues/pickle-arena-phase-1-hinjewadi/305310">Pickle Arena</a></td>
+                <td>Hudle lists indoor pickleball, 2 facilities/sessions, Rs 250 onwards. Playo lists 6AM-12AM and restroom/refreshments.</td>
+                <td><span class="status warn">Not normalized here</span></td>
+                <td>Indoor alternative; especially relevant for rain and heat comfort.</td>
+              </tr>
+              <tr>
+                <td><a href="https://playo.co/venue?venueId=86f97afc-ae87-4c6b-a21c-12ebd9a80731">Pickle &amp; Pitch Club</a></td>
+                <td>6AM-12AM on Playo; pickleball plus cricket nets and bowling machine; parking, restroom, cafe.</td>
+                <td><span class="status warn">Needs slot scrape</span></td>
+                <td>Multi-sport variety competitor; useful for groups that mix games.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="two-col" style="margin-top:18px;">
+          <div class="chart-shell">
+            <h3>What normalized pricing should become</h3>
+            <p class="section-copy">The final product should scrape date, start time, end time, slot duration, court/player unit, weekday/weekend flag, and peak/non-peak flag.</p>
+            <div class="bar-group">
+              <div class="bar-row"><span>Raw slot price</span><div class="bar-track"><div class="bar-fill" style="width:86%;"></div></div><span class="bar-value">input</span></div>
+              <div class="bar-row"><span>Slot duration</span><div class="bar-track"><div class="bar-fill amber" style="width:74%;"></div></div><span class="bar-value">input</span></div>
+              <div class="bar-row"><span>Court-hour</span><div class="bar-track"><div class="bar-fill" style="width:96%;"></div></div><span class="bar-value">output</span></div>
+              <div class="bar-row"><span>Peak band</span><div class="bar-track"><div class="bar-fill red" style="width:68%;"></div></div><span class="bar-value">output</span></div>
+            </div>
+          </div>
+          <div class="panel">
+            <h3>Why this matters to you</h3>
+            <p>
+              A Rs 250 public cue can mean very different things if it is a 30-minute court slot, a 60-minute court slot, a per-player price, or a special format. The report should not show a clean price ladder until the scrape has normalized the unit.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="soft">
+      <div class="wrap">
+        <h2>Spend And Convenience Signals</h2>
+        <p class="section-copy">
+          Food and convenience signals are useful for understanding lifestyle, but they should not become a fake income estimate. In this sample, the food-spend read stays at locality level because exact nearby restaurant freshness was not revalidated one by one.
+        </p>
+        <div class="three-col">
+          <article class="panel">
+            <span class="chip">Food and hangout</span>
+            <p class="big-line">Useful, but only after pin-conditioning.</p>
+            <p>Zomato, Swiggy, Google Places, and food-platform surfaces should be scraped for active nearby samples around the pin. Stale or far-away restaurants should not appear in the report.</p>
+          </article>
+          <article class="panel">
+            <span class="chip blue">Quick-commerce</span>
+            <p class="big-line">Good proxy for convenience density.</p>
+            <p>Blinkit, Zepto, Instamart, and similar public surfaces can help show serviceability and daily-life intensity, but the collection has to be location-set and repeatable.</p>
+          </article>
+          <article class="panel">
+            <span class="chip amber">Interpretation</span>
+            <p class="big-line">Use it as spending behavior, not affluence proof.</p>
+            <p>The right language is: "the area appears comfortable with paid convenience and casual leisure." The wrong language is: "this is a rich catchment" without strong data.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <h2>Locality Conditions Worth Showing</h2>
+        <p class="section-copy">
+          In India, some location-quality data is reliable and some is uneven. The report should show the reliable parts and push the rest into field checks.
+        </p>
+        <div class="table-shell">
+          <table>
+            <thead>
+              <tr>
+                <th>Condition</th>
+                <th>What can be used</th>
+                <th>How to say it in the report</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Traffic and routing</td>
+                <td>Google routing APIs, live/typical travel times, route alternatives, and recent traffic reporting.</td>
+                <td>"Evening travel time should be checked for the actual route; corridor news and routing data suggest access is a serious part of the user experience."</td>
+              </tr>
+              <tr>
+                <td>Metro and future access</td>
+                <td><a href="https://www.pmrda.gov.in/en/pune-metro-line-3/">PMRDA Metro Line 3</a> official pages and project updates.</td>
+                <td>"Future relief is visible in official planning, but today's user still experiences current roads."</td>
+              </tr>
+              <tr>
+                <td>Rain and drainage</td>
+                <td>IMD weather and warnings, user photos, field visit, local news where specific.</td>
+                <td>"No plot-level drainage conclusion is made from remote data; visit after rain."</td>
+              </tr>
+              <tr>
+                <td>Cleanliness, nuisance, night comfort</td>
+                <td>Reliable only when repeated public reviews, recent news, official complaint data, or field photos support it.</td>
+                <td>"Do not create a cleanliness or safety score unless the source base is repeatable."</td>
+              </tr>
+              <tr>
+                <td>Air quality</td>
+                <td>CPCB station/city-level AQI where relevant, not hyperlocal plot-level claims.</td>
+                <td>"AQI is useful as city/corridor context, not as an exact plot condition."</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="soft">
+      <div class="wrap">
+        <h2>Visual Evidence Pack</h2>
+        <p class="section-copy">
+          The final report should not rely on decorative diagrams. These are the visuals that would actually help you decide what to inspect.
+        </p>
+        <div class="photo-strip">
+          <div class="photo-card">
+            <strong>Exact pin satellite</strong>
+            <span>Marker, visual plot area, road edge, adjacent labels.</span>
+          </div>
+          <div class="photo-card">
+            <strong>Approach screenshots</strong>
+            <span>Street View or available map screenshots in each direction.</span>
+          </div>
+          <div class="photo-card">
+            <strong>Competitor map</strong>
+            <span>Nearby courts, indoor/outdoor labels, travel-time not just distance.</span>
+          </div>
+          <div class="photo-card">
+            <strong>Visit photo checklist</strong>
+            <span>Entry, parking, waiting area, lighting, rain path, road frontage.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <h2>What To Verify Physically</h2>
+        <p class="section-copy">
+          This is the part that should guide your site visit. It does not pretend remote data can settle every operating question.
+        </p>
+        <div class="table-shell">
+          <table>
+            <thead>
+              <tr>
+                <th>Visit window</th>
+                <th>What to observe</th>
+                <th>Why it matters</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Weekday 6:30 PM to 8:30 PM</td>
+                <td>Entry visibility, traffic stacking, drop-off movement, parking pressure, and whether first-time users look confused.</td>
+                <td>This is the likely after-work demand window, and the corridor is least forgiving then.</td>
+              </tr>
+              <tr>
+                <td>After rain</td>
+                <td>Waterlogging, mud transfer, slippery paths, court-side mess, and whether users still move comfortably.</td>
+                <td>Remote maps cannot prove drainage. A sports facility can lose repeat usage if rainy-day arrival is poor.</td>
+              </tr>
+              <tr>
+                <td>Weekend morning</td>
+                <td>Family users, beginners, coaching activity, waiting comfort, and cafe/hangout behavior nearby.</td>
+                <td>Pickleball demand is social. Weekend use shows whether the place can support more than office-hour play.</td>
+              </tr>
+              <tr>
+                <td>Quiet afternoon</td>
+                <td>How the plot feels without crowd energy: visibility, shade, approach, noise, and maintenance clues.</td>
+                <td>A location should still feel coherent when it is not being helped by evening activity.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="wrap">
+        Source links are woven into the relevant sections instead of shown as a separate proof register. Key public surfaces used here include <a href="https://maps.app.goo.gl/T5bHbKyUutUAnXpP7">the selected Google Maps pin</a>, <a href="https://playo.co/venues/hinjewadi-pune/sports/pickleball">Playo Hinjawadi pickleball</a>, <a href="https://hudle.in/venues/the-pickle-point-hinjewadi/683106">Hudle The Pickle Point</a>, <a href="https://playo.co/venues/pune/arena-x-hinjewadi-hinjewadi-pune">Playo Arena X</a>, <a href="https://hudle.in/venues/pickle-arena-phase-1-hinjewadi/305310">Hudle Pickle Arena</a>, <a href="https://thepicklepoint.in/">The Pickle Point official site</a>, and <a href="https://www.pmrda.gov.in/en/pune-metro-line-3/">PMRDA Metro Line 3</a>.
+      </div>
+    </footer>
+  </body>
+</html>

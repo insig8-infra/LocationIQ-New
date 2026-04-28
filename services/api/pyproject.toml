@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "locationiq-api"
+version = "0.1.0"
+description = "FastAPI service for the LocationIQ report lifecycle."
+requires-python = ">=3.9"
+dependencies = [
+  "fastapi>=0.128.0",
+  "python-dotenv>=1.2.0",
+  "razorpay>=1.4.2",
+  "supabase>=2.10.0",
+  "uvicorn[standard]>=0.30.0",
+  "pydantic[email]>=2.8.0"
+]
+
+[project.optional-dependencies]
+dev = [
+  "httpx>=0.27.0",
+  "pytest>=8.0.0",
+  "ruff>=0.8.0"
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"

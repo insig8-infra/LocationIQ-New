@@ -1,0 +1,1040 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>LocationIQ Sample Report - Pickleball Facility at Baner-Pashan Edge</title>
+    <style>
+      :root {
+        --bg: #f3f7f2;
+        --surface: #ffffff;
+        --surface-alt: #eef6f1;
+        --text: #12241c;
+        --muted: #58685f;
+        --line: #d6e0d8;
+        --green: #1f8a63;
+        --green-soft: #dff3e8;
+        --amber: #c7841a;
+        --amber-soft: #fff1d7;
+        --red: #b54a36;
+        --red-soft: #fde4de;
+        --ink: rgba(18, 36, 28, 0.78);
+        --radius: 6px;
+        --shadow: 0 18px 44px rgba(18, 36, 28, 0.08);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.55;
+      }
+
+      a {
+        color: var(--green);
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      img {
+        display: block;
+        width: 100%;
+      }
+
+      .hero {
+        min-height: 46vh;
+        padding: 32px 24px 44px;
+        color: #f6fff9;
+        background-image:
+          linear-gradient(180deg, rgba(13, 29, 22, 0.22), rgba(13, 29, 22, 0.72)),
+          url("https://images.pexels.com/photos/14982688/pexels-photo-14982688.jpeg?cs=srgb&dl=pexels-connorscottmcmanus-14982688.jpg&fm=jpg");
+        background-position: center;
+        background-size: cover;
+      }
+
+      .hero-inner,
+      .band-inner,
+      .footer-inner {
+        width: min(1160px, 100%);
+        margin: 0 auto;
+      }
+
+      .eyebrow {
+        margin: 0 0 12px;
+        font-size: 0.88rem;
+        letter-spacing: 0;
+        color: rgba(246, 255, 249, 0.82);
+        text-transform: uppercase;
+      }
+
+      h1,
+      h2,
+      h3 {
+        margin: 0;
+        line-height: 1.1;
+        letter-spacing: 0;
+      }
+
+      h1 {
+        max-width: 900px;
+        font-size: clamp(2rem, 4vw, 4rem);
+        margin-bottom: 14px;
+      }
+
+      .hero-copy {
+        max-width: 760px;
+        font-size: 1.04rem;
+        color: rgba(246, 255, 249, 0.88);
+        margin-bottom: 22px;
+      }
+
+      .chip-row,
+      .meta-grid,
+      .signal-grid,
+      .insight-grid,
+      .split-grid,
+      .three-grid,
+      .source-table {
+        display: grid;
+        gap: 14px;
+      }
+
+      .chip-row {
+        grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      }
+
+      .chip {
+        padding: 12px 14px;
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        background: rgba(10, 22, 17, 0.32);
+        backdrop-filter: blur(8px);
+        border-radius: var(--radius);
+      }
+
+      .chip strong,
+      .meta-item strong,
+      .signal-card strong,
+      .evidence-card strong,
+      .watchout strong,
+      .note strong {
+        display: block;
+        font-size: 0.82rem;
+        color: var(--muted);
+        margin-bottom: 6px;
+      }
+
+      .chip strong {
+        color: rgba(246, 255, 249, 0.72);
+      }
+
+      .chip span {
+        display: block;
+        font-size: 1rem;
+        color: #ffffff;
+      }
+
+      .band {
+        padding: 28px 24px;
+      }
+
+      .band.alt {
+        background: var(--surface-alt);
+      }
+
+      .band h2 {
+        font-size: clamp(1.35rem, 2.2vw, 2.1rem);
+        margin-bottom: 10px;
+      }
+
+      .band-intro {
+        max-width: 840px;
+        color: var(--ink);
+        margin: 0 0 20px;
+      }
+
+      .meta-grid {
+        grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      }
+
+      .meta-item,
+      .signal-card,
+      .evidence-card,
+      .watchout,
+      .note,
+      .table-card,
+      .map-card {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+      }
+
+      .meta-item {
+        padding: 16px;
+      }
+
+      .meta-item span {
+        display: block;
+      }
+
+      .signal-grid {
+        grid-template-columns: repeat(auto-fit, minmax(245px, 1fr));
+      }
+
+      .signal-card {
+        padding: 16px;
+      }
+
+      .signal-top {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        align-items: baseline;
+      }
+
+      .signal-label {
+        font-size: 0.92rem;
+        color: var(--muted);
+      }
+
+      .signal-index {
+        font-size: 1.7rem;
+        font-weight: 700;
+      }
+
+      .signal-pill {
+        display: inline-flex;
+        padding: 5px 9px;
+        border-radius: 999px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        margin: 10px 0 12px;
+      }
+
+      .supportive {
+        color: var(--green);
+        background: var(--green-soft);
+      }
+
+      .mixed {
+        color: var(--amber);
+        background: var(--amber-soft);
+      }
+
+      .friction {
+        color: var(--red);
+        background: var(--red-soft);
+      }
+
+      .bar {
+        width: 100%;
+        height: 10px;
+        border-radius: 999px;
+        background: #e4ece6;
+        overflow: hidden;
+        margin: 12px 0 10px;
+      }
+
+      .bar > span {
+        display: block;
+        height: 100%;
+        border-radius: 999px;
+        background: linear-gradient(90deg, #27a56c, #d3b11a, #d96a48);
+      }
+
+      .signal-card p,
+      .evidence-card p,
+      .watchout p,
+      .note p,
+      .table-card p {
+        margin: 0;
+        color: var(--ink);
+      }
+
+      .insight-grid {
+        grid-template-columns: 1.25fr 1fr;
+        align-items: start;
+      }
+
+      .lead-box {
+        padding: 22px;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+      }
+
+      .lead-box p {
+        margin: 0 0 14px;
+      }
+
+      .lead-box p:last-child {
+        margin-bottom: 0;
+      }
+
+      .note {
+        padding: 18px;
+      }
+
+      .split-grid {
+        grid-template-columns: 1.1fr 0.9fr;
+        align-items: start;
+      }
+
+      .map-card {
+        overflow: hidden;
+      }
+
+      .pin-visual {
+        padding: 22px;
+        min-height: 100%;
+        display: grid;
+        gap: 14px;
+        align-content: start;
+        background:
+          linear-gradient(135deg, rgba(31, 138, 99, 0.08), rgba(181, 74, 54, 0.08)),
+          linear-gradient(180deg, #ffffff, #f5fbf7);
+      }
+
+      .pin-label {
+        font-size: 0.82rem;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .pin-coords {
+        font-size: clamp(1.4rem, 2.8vw, 2rem);
+        font-weight: 700;
+      }
+
+      .pin-meta {
+        color: var(--ink);
+      }
+
+      .pin-grid {
+        display: grid;
+        gap: 10px;
+      }
+
+      .pin-row {
+        display: grid;
+        gap: 4px;
+        padding: 12px 0;
+        border-top: 1px solid var(--line);
+      }
+
+      .pin-row:first-of-type {
+        border-top: 0;
+        padding-top: 0;
+      }
+
+      .pin-row strong {
+        display: block;
+        font-size: 0.84rem;
+        color: var(--muted);
+      }
+
+      .pin-row span {
+        color: var(--text);
+        font-size: 0.98rem;
+      }
+
+      .table-card,
+      .evidence-card,
+      .watchout {
+        padding: 18px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        padding: 12px 10px;
+        text-align: left;
+        vertical-align: top;
+        border-bottom: 1px solid var(--line);
+        font-size: 0.95rem;
+      }
+
+      th {
+        font-size: 0.82rem;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      tr:last-child td {
+        border-bottom: 0;
+      }
+
+      ul {
+        margin: 0;
+        padding-left: 18px;
+      }
+
+      li + li {
+        margin-top: 8px;
+      }
+
+      .three-grid {
+        grid-template-columns: repeat(auto-fit, minmax(245px, 1fr));
+      }
+
+      .source-table {
+        grid-template-columns: 1fr;
+      }
+
+      .source-table .table-card {
+        overflow-x: auto;
+      }
+
+      .badge {
+        display: inline-flex;
+        padding: 4px 8px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-weight: 600;
+        white-space: nowrap;
+      }
+
+      .badge.live {
+        background: var(--green-soft);
+        color: var(--green);
+      }
+
+      .badge.proxy {
+        background: var(--amber-soft);
+        color: var(--amber);
+      }
+
+      .badge.low {
+        background: var(--red-soft);
+        color: var(--red);
+      }
+
+      footer {
+        padding: 18px 24px 36px;
+      }
+
+      .footer-inner {
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+
+      @media (max-width: 920px) {
+        .insight-grid,
+        .split-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 680px) {
+        .hero {
+          padding: 26px 18px 34px;
+        }
+
+        .band,
+        footer {
+          padding-left: 18px;
+          padding-right: 18px;
+        }
+
+        h1 {
+          font-size: clamp(1.9rem, 10vw, 2.8rem);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="hero">
+      <div class="hero-inner">
+        <p class="eyebrow">LocationIQ sample report - fitness_sports / pickleball_facility</p>
+        <h1>How this Baner-Pashan edge pin behaves for a planned-visit pickleball facility</h1>
+        <p class="hero-copy">
+          This prototype uses the updated report templates to read the location as a sports destination, not to give a verdict.
+          The strongest story here is not simple "demand" or "competition"; it is the combination of office-residential catchment,
+          locality-boundary behavior across public platforms, and arrival friction created by a road corridor that is still evolving.
+        </p>
+        <div class="chip-row">
+          <div class="chip">
+            <strong>Location input</strong>
+            <span>18.549390, 73.773619</span>
+          </div>
+          <div class="chip">
+            <strong>Nearest locality read</strong>
+            <span>Baner-Pashan edge, Pune</span>
+          </div>
+          <div class="chip">
+            <strong>Primary catchment lens</strong>
+            <span>300 m, 1.5 km, 3 km, 10-15 min</span>
+          </div>
+          <div class="chip">
+            <strong>Generated</strong>
+            <span>21 Apr 2026, Asia/Kolkata</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="band">
+      <div class="band-inner">
+        <h2>Report Header</h2>
+        <p class="band-intro">
+          Coverage is strongest for competition, sports-cluster visibility, office-corridor context, and current road-corridor updates.
+          Coverage is weaker for exact parking capacity, lighting quality, drainage at the final turn-in, and actual paid utilization at this exact pin.
+        </p>
+        <div class="meta-grid">
+          <article class="meta-item">
+            <strong>Location input</strong>
+            <span><a href="https://maps.app.goo.gl/xYnFGG2UqCdoq2uv9">Google Maps link</a></span>
+            <span>18.549390, 73.773619</span>
+          </article>
+          <article class="meta-item">
+            <strong>Exact pin character</strong>
+            <span>Highway/service-road edge near tech park and residential societies</span>
+          </article>
+          <article class="meta-item">
+            <strong>Purpose lens</strong>
+            <span>Planned-visit pickleball facility with evening and weekend demand focus</span>
+          </article>
+          <article class="meta-item">
+            <strong>Data classes used</strong>
+            <span>Maps context, public booking platforms, locality food surfaces, civic updates, office anchor pages</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="band alt">
+      <div class="band-inner">
+        <h2>Location Understanding Summary</h2>
+        <div class="insight-grid">
+          <div class="lead-box">
+            <p>
+              This pin behaves more like an arrival-led sports destination on the Baner-Pashan edge than a casual walk-in high street.
+              The immediate context combines one visible office anchor, multiple named residential societies, and direct access to major road infrastructure.
+            </p>
+            <p>
+              For pickleball, the clearest positive signals are the office-plus-residential catchment, a dense existing booking ecosystem,
+              and a strong evening-support food surface across adjacent localities. The clearest friction signals are road-work uncertainty,
+              likely peak-hour arrival stress, and limited proof on whether the exact pin has clean parking and monsoon-ready operations.
+            </p>
+            <p>
+              Evidence is strongest for competition and catchment interpretation. It is least certain on actual paid conversion, community retention,
+              and whether a covered or premium-format court would stand apart enough from nearby outdoor supply.
+            </p>
+          </div>
+          <aside class="note">
+            <strong>Template hardening lesson</strong>
+            <p>
+              This is a boundary-behavior location. Baner, Pashan, Baner Gaon, and Baner-Pashan Link Road all surface differently depending on source.
+              The product should not lock itself to one locality label when the pin sits on an edge.
+            </p>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="band">
+      <div class="band-inner">
+        <h2>Aspect Signal Snapshot</h2>
+        <p class="band-intro">
+          These are aspect-level signals only. They are not an overall score and not a recommendation.
+        </p>
+        <div class="signal-grid">
+          <article class="signal-card">
+            <div class="signal-top">
+              <span class="signal-label">Target audience catchment</span>
+              <span class="signal-index">81</span>
+            </div>
+            <span class="signal-pill supportive">Supportive signal</span>
+            <div class="bar"><span style="width: 81%"></span></div>
+            <p>Office and residential anchors are both present, which is favorable for after-work and weekend repeat usage.</p>
+          </article>
+          <article class="signal-card">
+            <div class="signal-top">
+              <span class="signal-label">Movement and arrival</span>
+              <span class="signal-index">63</span>
+            </div>
+            <span class="signal-pill mixed">Mixed signal</span>
+            <div class="bar"><span style="width: 63%"></span></div>
+            <p>Vehicle accessibility is strong, but ongoing Baner-Pashan road issues can turn the final approach into a real operating friction.</p>
+          </article>
+          <article class="signal-card">
+            <div class="signal-top">
+              <span class="signal-label">Competition and sports ecosystem</span>
+              <span class="signal-index">76</span>
+            </div>
+            <span class="signal-pill supportive">Supportive signal</span>
+            <div class="bar"><span style="width: 76%"></span></div>
+            <p>The cluster is already active on Playo and Hudle, which validates category awareness but raises differentiation pressure.</p>
+          </article>
+          <article class="signal-card">
+            <div class="signal-top">
+              <span class="signal-label">Time-based character</span>
+              <span class="signal-index">74</span>
+            </div>
+            <span class="signal-pill supportive">Supportive signal</span>
+            <div class="bar"><span style="width: 74%"></span></div>
+            <p>Weekday evenings and weekends appear materially stronger than weekday daytime because the location reads as planned-visit, not impulse-led.</p>
+          </article>
+          <article class="signal-card">
+            <div class="signal-top">
+              <span class="signal-label">Support ecosystem</span>
+              <span class="signal-index">71</span>
+            </div>
+            <span class="signal-pill supportive">Supportive signal</span>
+            <div class="bar"><span style="width: 71%"></span></div>
+            <p>Food and convenience surfaces across Baner, Pashan, and Baner Gaon are active enough to support pre-game and post-game behavior.</p>
+          </article>
+          <article class="signal-card">
+            <div class="signal-top">
+              <span class="signal-label">Weather resilience</span>
+              <span class="signal-index">43</span>
+            </div>
+            <span class="signal-pill friction">Friction signal</span>
+            <div class="bar"><span style="width: 43%"></span></div>
+            <p>Nearby public booking surfaces show outdoor play, but this sample could not confirm covered-court advantage or monsoon-ready circulation at the pin.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="band alt">
+      <div class="band-inner">
+        <h2>Purpose Lens</h2>
+        <div class="three-grid">
+          <article class="evidence-card">
+            <strong>What this report emphasizes</strong>
+            <p>Repeat sports audience, office-to-court movement, weekend community behavior, parking and turn-in quality, after-dark comfort, weather resilience, and competitor visibility on booking platforms.</p>
+          </article>
+          <article class="evidence-card">
+            <strong>What it intentionally does not do</strong>
+            <p>It does not estimate profitability, recommend whether to invest, or pretend that locality demand automatically converts into paid slot utilization.</p>
+          </article>
+          <article class="evidence-card">
+            <strong>Why this matters for pickleball</strong>
+            <p>Pickleball works best when a location supports habit, convenience, social community, and easy arrival. One-time footfall matters less than repeat, low-friction usage.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="band">
+      <div class="band-inner">
+        <h2>Location Orientation</h2>
+        <div class="split-grid">
+          <div class="map-card pin-visual">
+            <span class="pin-label">Pin summary</span>
+            <div class="pin-coords">18.549390, 73.773619</div>
+            <div class="pin-meta">
+              Approx Google Maps read: GQXF+QC5 Pune, Maharashtra
+            </div>
+            <div class="pin-grid">
+              <div class="pin-row">
+                <strong>Immediate context</strong>
+                <span>Highway and service-road edge near ARM Madhuban Tech Park</span>
+              </div>
+              <div class="pin-row">
+                <strong>Named residential edge</strong>
+                <span>Venezia Homes, Peony Housing Society, Silver Dale, Ambrosia Galaxy, Zensistry</span>
+              </div>
+              <div class="pin-row">
+                <strong>Exact-pin effect</strong>
+                <span>Feels more like a destination arrival point than a casual lane where people naturally drift in on foot</span>
+              </div>
+            </div>
+          </div>
+          <div class="table-card">
+            <table>
+              <thead>
+                <tr>
+                  <th>Catchment</th>
+                  <th>Observed numbers</th>
+                  <th>Interpretation</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Immediate map frame</td>
+                  <td>1 visible tech-park anchor, at least 5 named residential societies, 2 major road interfaces</td>
+                  <td>The pin feels more like a destination arrival point than a neighborhood strolling pocket.</td>
+                </tr>
+                <tr>
+                  <td>About 1.1-1.6 km booking surface</td>
+                  <td>At least 5 named sports or pickleball venues surfaced on Playo locality pages</td>
+                  <td>The surrounding sports fabric is already active and legible to users.</td>
+                </tr>
+                <tr>
+                  <td>Baner locality booking surface</td>
+                  <td>Playo shows 76 pickleball venues in Baner-pune</td>
+                  <td>The broader micro-market is not white space. It is an active pickleball cluster.</td>
+                </tr>
+                <tr>
+                  <td>City-level platform view</td>
+                  <td>Playo shows 89 pickleball venues in Pune</td>
+                  <td>Pune itself already supports the sport at meaningful scale, which helps category education but intensifies competitive comparison.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="band alt">
+      <div class="band-inner">
+        <h2>Target Audience Catchment</h2>
+        <div class="three-grid">
+          <article class="evidence-card">
+            <strong>Office corridor evidence</strong>
+            <p>
+              <a href="https://www.smartworksoffice.com/office-space/pune/amar-madhuban-tech-park/">Smartworks at Amar Madhuban Tech Park</a>
+              surfaces roughly 275,000 sq ft of managed office space near the Pune-Mumbai Highway. Nearby Baner office pages also surface
+              <a href="https://www.smartworksoffice.com/office-space/pune/m-agile/">Smartworks M Agile</a> and
+              <a href="https://wework.co.in/pune/baner/eleven-west/">WeWork Eleven West</a> on the Pan Card Club corridor.
+            </p>
+          </article>
+          <article class="evidence-card">
+            <strong>Residential edge evidence</strong>
+            <p>
+              The live map context around the pin shows named residential societies including Venezia Homes, Peony Housing Society,
+              Silver Dale, Ambrosia Galaxy, and Zensistry. This matters because pickleball does not need pure high-street walk-ins; it needs nearby people who can return frequently.
+            </p>
+          </article>
+          <article class="evidence-card">
+            <strong>Interpretation</strong>
+            <p>
+              The catchment reads strongest for professionals, resident groups, society communities, and beginner-to-intermediate recreational users.
+              It reads weaker for purely impulse-led discovery unless signage and digital booking presence are both very strong.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="band">
+      <div class="band-inner">
+        <h2>Competition And Sports Ecosystem</h2>
+        <p class="band-intro">
+          The area is already legible to sports users on booking platforms. That is useful as market education, but it means the exact-pin story has to become more specific than "there is demand nearby."
+        </p>
+        <div class="table-card">
+          <table>
+            <thead>
+              <tr>
+                <th>Venue or surface</th>
+                <th>Public-web signal</th>
+                <th>Approx catchment cue</th>
+                <th>What it means</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><a href="https://playo.co/venues/baner-pune/sports/pickleball">Playo Baner pickleball page</a></td>
+                <td>76 venues surfaced for Baner-pune</td>
+                <td>Locality-conditioned</td>
+                <td>Strong evidence that Baner already behaves like an active pickleball discovery zone.</td>
+              </tr>
+              <tr>
+                <td><a href="https://playo.co/venues/baner-pashan-link-road-pune/sports/all">Playo Baner-Pashan Link Road sports page</a></td>
+                <td>Pickle Upp, Force Playing Fields, The Life Sports, SkySwing, Aditya Sports Academy all visible in about 1.1-1.6 km band</td>
+                <td>Link-road micro-catchment</td>
+                <td>The immediate ecosystem is multi-sport, not just one isolated pickleball venue.</td>
+              </tr>
+              <tr>
+                <td><a href="https://playo.co/venues/pune/picklex-baner-pune">PickleX</a></td>
+                <td>6 AM - 12 AM; parking, washroom, changing room, cafeteria</td>
+                <td>On Baner-Pashan Link Road</td>
+                <td>Nearby supply already uses the exact corridor and offers decent amenity language.</td>
+              </tr>
+              <tr>
+                <td><a href="https://playo.co/venues/pashan-pune/pickle-upp-pashan-pune">Pickle Upp</a></td>
+                <td>6 AM - 12 AM; parking and restroom</td>
+                <td>About 1.2-1.6 km on locality surfaces</td>
+                <td>The area already has another entry-point venue targeting accessible recreational use.</td>
+              </tr>
+              <tr>
+                <td><a href="https://playo.co/venues/baner-pune/force-playing-fields-baner-baner-pune">Force Playing Fields (Baner)</a></td>
+                <td>7 AM - 12 AM; pickleball plus football and box cricket; parking and restroom</td>
+                <td>About 1.3 km on link-road surface</td>
+                <td>Competes on group-sport adjacency and shared recreation behavior, not only pure pickleball.</td>
+              </tr>
+              <tr>
+                <td><a href="https://playo.co/venues/someshwarwadi-pune/the-life-sports-someshwarwadi-baner-someshwarwadi-pune">The Life Sports</a></td>
+                <td>76 ratings; multi-sport</td>
+                <td>About 1.3 km on locality surfaces</td>
+                <td>Existing review depth signals that users already compare facilities in this cluster, not just discover them.</td>
+              </tr>
+              <tr>
+                <td><a href="https://hudle.in/pages/pickleball-courts-in-pune">Hudle Pune pickleball page</a></td>
+                <td>Trooferz Baner from Rs 300, PickleX Baner from Rs 650, Force Playing Fields Baner from Rs 300, Bounzz Pickleden Balewadi from Rs 99</td>
+                <td>Baner/Balewadi/Aundh belt</td>
+                <td>Visible price cues suggest that price positioning and format quality will matter immediately.</td>
+              </tr>
+              <tr>
+                <td><a href="https://pages.khelomore.com/lp/pune-pickleball-99-camp/index.html">KheloMore starter camp page</a></td>
+                <td>Pashan PickleX beginner camp surfaced in March 2026</td>
+                <td>Same local sports cluster</td>
+                <td>The area is not just serving existing players; it is also onboarding beginners, which matters for coaching-community strategy.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="band alt">
+      <div class="band-inner">
+        <h2>Movement, Arrival, And Operating Friction</h2>
+        <div class="three-grid">
+          <article class="watchout">
+            <strong>What supports arrival</strong>
+            <p>
+              The pin sits on a corridor that is naturally car and two-wheeler oriented. Nearby office and sports facilities explicitly market parking,
+              and Hudle surfaces a Baner metro cue of 2.2 km for Trooferz and 2.8 km for Force Playing Fields, which suggests that this micro-market is more last-mile dependent than metro-walk dependent.
+            </p>
+          </article>
+          <article class="watchout">
+            <strong>What creates friction</strong>
+            <p>
+              <a href="https://indianexpress.com/article/cities/pune/building-pune-finally-pmc-to-appoint-contractor-for-incomplete-stretch-of-baner-pashan-link-road-10615894/">The Indian Express</a>
+              and
+              <a href="https://timesofindia.indiatimes.com/city/pune/pmc-set-to-resume-work-of-baner-pashan-link-road-in-a-month/articleshow/130316429.cms">The Times of India</a>
+              both report that the Baner-Pashan Link Road still has a 200 m incomplete stretch on a 1.2 km project tied to connectivity for around 2.5 lakh people.
+            </p>
+          </article>
+          <article class="watchout">
+            <strong>Interpretation</strong>
+            <p>
+              This is a place where a strong catchment can still feel operationally irritating if the final approach is dusty, muddy, poorly lit, or awkward for U-turns and drop-offs.
+              For pickleball, that friction hits weekday evenings harder than it hits weekend mornings.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="band">
+      <div class="band-inner">
+        <h2>Support Ecosystem And Locality Boundary Behavior</h2>
+        <p class="band-intro">
+          This test is valuable because food-discovery surfaces shift depending on whether the source resolves the pin as Baner, Pashan, or Baner Gaon. The location is close enough to a boundary that the app should collect multiple locality views and then deduplicate them.
+        </p>
+        <div class="table-card">
+          <table>
+            <thead>
+              <tr>
+                <th>Locality surface</th>
+                <th>Visible examples</th>
+                <th>What this tells us</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><a href="https://www.zomato.com/pune/delivery-in-baner">Zomato Baner</a></td>
+                <td>McDonald's 24 min, Domino's 23 min, Burger King 24 min, Irani Cafe 20 min, Pizza Hut 42 min</td>
+                <td>Baner resolves as a strong food-support surface for after-play consumption and staff convenience.</td>
+              </tr>
+              <tr>
+                <td><a href="https://www.zomato.com/pune/delivery-in-pashan">Zomato Pashan</a></td>
+                <td>McDonald's 34 min, Domino's 37 min, Burger King 30 min, Pizza Hut 25 min, Irani Cafe 29 min</td>
+                <td>Pashan also resolves as active, but with slightly different delivery posture and merchant mix.</td>
+              </tr>
+              <tr>
+                <td><a href="https://www.zomato.com/pune/delivery-in-baner-gaon">Zomato Baner Gaon</a></td>
+                <td>Taco Bell 15 min, Burger King 18 min, McDonald's 20 min, Pizza Hut 23 min</td>
+                <td>The same broad pin can surface a faster-feeling support ecosystem when resolved slightly differently by locality.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="band alt">
+      <div class="band-inner">
+        <h2>Time-Based Character</h2>
+        <div class="table-card">
+          <table>
+            <thead>
+              <tr>
+                <th>Window</th>
+                <th>Likely character</th>
+                <th>Report interpretation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Weekday morning</td>
+                <td>Lighter road pressure, lower spontaneous sports energy</td>
+                <td>More useful for coaching, academy slots, and maintenance than for social peak-energy play.</td>
+              </tr>
+              <tr>
+                <td>Weekday evening</td>
+                <td>Strongest office-to-court conversion window, but highest arrival friction</td>
+                <td>Probably the most important operating window for repeat bookings and the hardest one to get right operationally.</td>
+              </tr>
+              <tr>
+                <td>Weekend morning</td>
+                <td>Family, beginner, and community-oriented usage window</td>
+                <td>Useful for clinics, starter camps, and mixed-skill social play.</td>
+              </tr>
+              <tr>
+                <td>Weekend evening</td>
+                <td>Social recreation with stronger food and hangout adjacency</td>
+                <td>Can support leagues or social formats, especially if the facility feels comfortable after dark.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="band">
+      <div class="band-inner">
+        <h2>What The Exact Pin Still Needs To Prove</h2>
+        <div class="three-grid">
+          <article class="watchout">
+            <strong>Parking and stacking</strong>
+            <p>The booking ecosystem nearby talks about parking a lot, which means users are already conditioned to expect it. The exact pin still needs a real on-ground parking count and circulation test.</p>
+          </article>
+          <article class="watchout">
+            <strong>Covered-court edge</strong>
+            <p>Nearby supply appears meaningfully outdoor-led. If this site can support covered play, rain recovery, better lighting, and cleaner amenities, that becomes a much more tangible interpretive advantage.</p>
+          </article>
+          <article class="watchout">
+            <strong>Community depth</strong>
+            <p>The area shows platform visibility and beginner activation, but this sample cannot yet prove league stickiness, corporate group conversion, or long-run retention.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="band alt">
+      <div class="band-inner">
+        <h2>On-Ground Validation Plan</h2>
+        <div class="three-grid">
+          <article class="evidence-card">
+            <strong>Weekday evening check</strong>
+            <p>Visit between 6:15 PM and 8:45 PM. Time the final approach from the highway side, count arriving two-wheelers and cars, and inspect whether drop-off flow blocks the road edge.</p>
+          </article>
+          <article class="evidence-card">
+            <strong>Player interviews</strong>
+            <p>Talk to users at PickleX, Force Playing Fields, Trooferz, and one Aundh venue. Ask what they still dislike about current courts: lighting, surface, heat, washrooms, waiting area, or slot scarcity.</p>
+          </article>
+          <article class="evidence-card">
+            <strong>Weather and comfort test</strong>
+            <p>Repeat the visit once after rain. Check puddling, mud transfer into the court entry, drainage at the turn-in, and whether the walk from parking to play area feels annoying enough to hurt repeat usage.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="band">
+      <div class="band-inner">
+        <h2>Source Notes And Limits</h2>
+        <div class="three-grid">
+          <article class="evidence-card">
+            <strong><span class="badge live">Current public inputs</span></strong>
+            <p>Competition visibility on Playo and Hudle, locality-conditioned food surfaces on Zomato, and current Baner-Pashan road-update reporting.</p>
+          </article>
+          <article class="evidence-card">
+            <strong><span class="badge proxy">Contextual inputs</span></strong>
+            <p>Office-corridor scale from Smartworks and WeWork pages, and immediate residential presence inferred from map-visible societies and corridor context.</p>
+          </article>
+          <article class="evidence-card">
+            <strong><span class="badge low">Needs field verification</span></strong>
+            <p>Exact parking count, walkability quality after dark, drainage performance, and how much of the nearby sports cluster is still underutilized rather than saturated.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="band alt">
+      <div class="band-inner">
+        <h2>Source Appendix</h2>
+        <div class="source-table">
+          <div class="table-card">
+            <table>
+              <thead>
+                <tr>
+                  <th>Source</th>
+                  <th>Used for</th>
+                  <th>How it was used</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><a href="https://maps.app.goo.gl/xYnFGG2UqCdoq2uv9">Google Maps link</a></td>
+                  <td>Pin grounding and nearby context</td>
+                  <td>Used to anchor coordinates and nearby labels such as ARM Madhuban Tech Park and surrounding societies.</td>
+                </tr>
+                <tr>
+                  <td><a href="https://playo.co/venues/baner-pune/sports/pickleball">Playo Baner pickleball page</a></td>
+                  <td>Cluster density</td>
+                  <td>Used as locality-conditioned evidence that Baner already behaves as an active pickleball market.</td>
+                </tr>
+                <tr>
+                  <td><a href="https://playo.co/venues/baner-pashan-link-road-pune/sports/all">Playo Baner-Pashan Link Road sports page</a></td>
+                  <td>Immediate sports context</td>
+                  <td>Used to surface named nearby venues in the link-road micro-catchment.</td>
+                </tr>
+                <tr>
+                  <td><a href="https://hudle.in/pages/pickleball-courts-in-pune">Hudle Pune pickleball page</a></td>
+                  <td>Price and venue posture</td>
+                  <td>Used to pull competitor price cues and visible Baner/Balewadi/Aundh venue mix.</td>
+                </tr>
+                <tr>
+                  <td><a href="https://pages.khelomore.com/lp/pune-pickleball-99-camp/index.html">KheloMore Pune pickleball camp page</a></td>
+                  <td>Beginner activation</td>
+                  <td>Used to show that nearby Pashan courts are also being used for starter-camp onboarding.</td>
+                </tr>
+                <tr>
+                  <td><a href="https://www.zomato.com/pune/delivery-in-baner">Zomato Baner</a>, <a href="https://www.zomato.com/pune/delivery-in-pashan">Pashan</a>, <a href="https://www.zomato.com/pune/delivery-in-baner-gaon">Baner Gaon</a></td>
+                  <td>Support ecosystem and locality boundary behavior</td>
+                  <td>Used to compare how the same broad pin resolves into different food-support surfaces across adjacent localities.</td>
+                </tr>
+                <tr>
+                  <td><a href="https://www.smartworksoffice.com/office-space/pune/amar-madhuban-tech-park/">Smartworks AMTP</a></td>
+                  <td>Office anchor evidence</td>
+                  <td>Used to size the nearby managed-office corridor and frame after-work demand potential.</td>
+                </tr>
+                <tr>
+                  <td><a href="https://www.smartworksoffice.com/office-space/pune/m-agile/">Smartworks M Agile</a> and <a href="https://wework.co.in/pune/baner/eleven-west/">WeWork Eleven West</a></td>
+                  <td>Broader office corridor context</td>
+                  <td>Used as corroboration that Baner's nearby business corridor is active and multi-anchor, not dependent on one building.</td>
+                </tr>
+                <tr>
+                  <td><a href="https://indianexpress.com/article/cities/pune/building-pune-finally-pmc-to-appoint-contractor-for-incomplete-stretch-of-baner-pashan-link-road-10615894/">Indian Express</a> and <a href="https://timesofindia.indiatimes.com/city/pune/pmc-set-to-resume-work-of-baner-pashan-link-road-in-a-month/articleshow/130316429.cms">Times of India</a></td>
+                  <td>Current infrastructure friction</td>
+                  <td>Used to contextualize access risk and corridor change rather than to judge the location positively or negatively.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-inner">
+        This is a sample webpage representation of the report. It is designed to show how the app can surface evidence, interpretation, source limits, and what still needs field validation without collapsing into a final verdict.
+      </div>
+    </footer>
+  </body>
+</html>

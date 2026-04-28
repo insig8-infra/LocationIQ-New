@@ -1,0 +1,20 @@
+{
+  "name": "locationiq",
+  "version": "0.1.0",
+  "private": true,
+  "description": "LocationIQ no-login location intelligence report product.",
+  "workspaces": [
+    "apps/web"
+  ],
+  "scripts": {
+    "dev:web": "npm --workspace apps/web run dev",
+    "build:web": "npm --workspace apps/web run build",
+    "lint:web": "npm --workspace apps/web run lint",
+    "typecheck:web": "npm --workspace apps/web run typecheck",
+    "dev:api": "cd services/api && .venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8000",
+    "test:api": "cd services/api && .venv/bin/pytest"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
