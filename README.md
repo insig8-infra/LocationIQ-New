@@ -68,5 +68,6 @@ Storage:
 - `LOCATIONIQ_STORAGE=memory` uses local in-memory records.
 - `LOCATIONIQ_STORAGE=supabase` uses `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` from server-side API code.
 - `npm run check:supabase` checks whether the required Supabase tables are reachable after migration.
+- LocationIQ stores exact pins in `report_locations` to avoid colliding with existing generic `locations` tables.
 
 Do not expose `SUPABASE_SERVICE_ROLE_KEY`, `RAZORPAY_KEY_SECRET`, or provider server keys to the browser.

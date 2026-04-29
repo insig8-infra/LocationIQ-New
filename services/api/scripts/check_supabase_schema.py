@@ -8,7 +8,7 @@ from app.repositories.supabase_repo import SupabaseReportRepository
 
 REQUIRED_TABLES: List[str] = [
     "report_requests",
-    "locations",
+    "report_locations",
     "reverse_geocode_results",
     "s2_cells",
     "s2_cell_features",
@@ -41,7 +41,7 @@ REQUIRED_COLUMNS = {
         "current_stage",
         "progress_percent",
     ],
-    "locations": [
+    "report_locations": [
         "id",
         "report_request_id",
         "selected_latitude",

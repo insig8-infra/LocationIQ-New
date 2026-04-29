@@ -52,7 +52,7 @@ class SupabaseReportRepository(InMemoryReportRepository):
 
         cells = cell_profile.get("cells", {})
         location_row = (
-            self.client.table("locations").insert(
+            self.client.table("report_locations").insert(
                 {
                     "report_request_id": request_row["id"],
                     "selected_latitude": pin.latitude,
@@ -209,7 +209,7 @@ class SupabaseReportRepository(InMemoryReportRepository):
 
     def _hydrate(self, row: Dict[str, Any]) -> ReportRecord:
         location_rows = (
-            self.client.table("locations")
+            self.client.table("report_locations")
             .select("*")
             .eq("report_request_id", row["id"])
             .limit(1)

@@ -394,7 +394,9 @@ Columns:
 | `created_at` | timestamptz |  |
 | `updated_at` | timestamptz |  |
 
-### 5.2 `locations`
+### 5.2 `report_locations`
+
+The implementation uses `report_locations` rather than a generic `locations` table name to avoid collisions in existing Supabase projects.
 
 | Column | Type | Notes |
 |---|---|---|
@@ -754,7 +756,7 @@ Admin access:
 Required indexes:
 
 ```sql
-create index locations_geom_idx on locations using gist (geom);
+create index report_locations_geom_idx on report_locations using gist (geom);
 create index pois_geom_idx on pois using gist (geom);
 create index catchments_geom_idx on catchments using gist (geom);
 create index report_requests_public_token_idx on report_requests (public_token);
