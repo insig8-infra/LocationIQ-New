@@ -51,6 +51,10 @@ Run the web app:
 npm run dev:web
 ```
 
+Completed reports can be reopened at `/report/{report_token}`. The token is the `rt_...`
+value returned by the preview/payment API and is backed by Supabase when
+`LOCATIONIQ_STORAGE=supabase`.
+
 The current implementation uses mock provider adapters for location resolution, S2 cell profiling, checkout, and report generation. This lets the no-login product flow run before paid provider keys are configured.
 
 ## Provider Configuration

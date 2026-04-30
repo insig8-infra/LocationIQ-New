@@ -194,6 +194,19 @@ input:focus {
   opacity: 0.68;
 }
 
+.secondary-button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 42px;
+  border: 1px solid rgba(46, 125, 91, 0.32);
+  border-radius: 7px;
+  background: var(--soft-green);
+  color: var(--accent-dark);
+  padding: 0 14px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
 .map-panel {
   min-height: 430px;
   overflow: hidden;
@@ -352,6 +365,12 @@ input:focus {
   color: var(--accent-dark);
   font-size: 2.4rem;
   font-weight: 850;
+}
+
+.report-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin: -4px 0 18px;
 }
 
 .source-list {

@@ -2,6 +2,7 @@
 
 import { FormEvent, useMemo, useState } from "react";
 import { ExactPinMap } from "@/components/ExactPinMap";
+import { ReportView } from "@/components/ReportView";
 import {
   completeRazorpayPayment,
   completeMockPayment,
@@ -116,7 +117,10 @@ export default function Home() {
   async function startCheckout() {
     if (!locationPreview) return;
     await runAction(async () => {
-      const nextCheckout = await createCheckout(locationPreview.report_request_id);
+      const nextCheckout = await createCheckout(
+        locationPreview.report_request_id,
+        locationPreview.report_token,
+      );
       setCheckout(nextCheckout);
       setStep("payment");
     });
@@ -336,59 +340,11 @@ export default function Home() {
           </section>
         ) : null}
 
-        {step === "report" && report ? <ReportView report={report} /> : null}
+        {step === "report" && report ? (
+          <ReportView report={report} reportToken={locationPreview?.report_token} />
+        ) : null}
       </section>
     </main>
-  );
-}
-
-function ReportView({ report }: { report: ReportResponse }) {
-  const reportJson = report.report;
-  const summary = reportJson.reader_summary as {
-    headline?: string;
-    summary?: string;
-    what_to_verify?: Array<{ title: string; text: string }>;
-  };
-  const exactPin = reportJson.exact_pin as { pin_read?: string; nearest_poi_policy?: string };
-  const sourceNotes = (reportJson.source_notes ?? []) as Array<{
-    id: string;
-    name: string;
-    user_facing_note: string;
-  }>;
-
-  return (
-    <section className="report-panel">
-      <div className="section-heading">
-        <p className="eyebrow">Interactive report</p>
-        <h2>{summary.headline}</h2>
-        <p>{summary.summary}</p>
-      </div>
-      <div className="preview-grid">
-        <div className="summary-panel">
-          <h3>Exact pin</h3>
-          <p>{exactPin.pin_read}</p>
-          <p>{exactPin.nearest_poi_policy}</p>
-        </div>
-        <div className="summary-panel">
-          <h3>What to verify</h3>
-          <ul>
-            {summary.what_to_verify?.map((item) => (
-              <li key={item.title}>
-                <strong>{item.title}.</strong> {item.text}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-      <div className="source-list">
-        {sourceNotes.map((source) => (
-          <div key={source.id}>
-            <strong>{source.name}</strong>
-            <p>{source.user_facing_note}</p>
-          </div>
-        ))}
-      </div>
-    </section>
   );
 }
 

@@ -60,13 +60,14 @@ export async function confirmPreview(reportRequestId: string, latitude: number, 
   );
 }
 
-export async function createCheckout(reportRequestId: string) {
+export async function createCheckout(reportRequestId: string, reportToken?: string) {
   const origin = typeof window !== "undefined" ? window.location.origin : "http://localhost:3000";
+  const successReportPath = reportToken ?? reportRequestId;
   return requestJson<CheckoutResponse>(`/v1/report-requests/${reportRequestId}/checkout`, {
     method: "POST",
     body: JSON.stringify({
-      success_url: `${origin}/report/${reportRequestId}?payment=success`,
-      cancel_url: `${origin}/preview/${reportRequestId}?payment=cancelled`,
+      success_url: `${origin}/report/${successReportPath}?payment=success`,
+      cancel_url: `${origin}/?payment=cancelled`,
     }),
   });
 }
